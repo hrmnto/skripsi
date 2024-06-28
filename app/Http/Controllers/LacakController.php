@@ -19,7 +19,7 @@ class LacakController extends Controller
         //         "foto" => $biodata->foto
         //     ];
         // }
-        echo "test";
+        
         return view('lacak', [
             'title' => 'Lacak',
             'biodatas' => $biodatas
