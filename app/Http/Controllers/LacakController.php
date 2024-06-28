@@ -20,6 +20,7 @@ class LacakController extends Controller
         //     ];
         // }
         
+        
         return view('lacak', [
             'title' => 'Lacak',
             'biodatas' => $biodatas
