@@ -8,6 +8,11 @@ use Illuminate\Routing\Controller;
 use App\Http\Requests\StorePekerjaanRequest;
 use App\Http\Requests\UpdatePekerjaanRequest;
 
+use App\Models\Province;
+use App\Models\Regency;
+use App\Models\District;
+use App\Models\Village;
+
 class PekerjaanController extends Controller
 {
     /**
@@ -26,7 +31,8 @@ class PekerjaanController extends Controller
      */
     public function create()
     {
-        return view("alumni.works.create");
+        $provinces = Province::all();
+        return view("alumni.works.create", compact('provinces'));
     }
 
     /**
@@ -34,12 +40,17 @@ class PekerjaanController extends Controller
      */
     public function store(StorePekerjaanRequest $request)
     {
- 
-    
+
+
         $validatedData = $request->validate([
             'nim' => 'required',
             'nama_pekerjaan' => "required",
             'tempat_pekerjaan' => 'required',
+            'kelurahan' => 'required',
+            'kecamatan' => 'required',
+            'kabupaten' => 'required',
+            'provinsi' => 'required',
+            'koordinat' => 'required',
             'tanggal_pekerjaan' => 'required',
             'gaji' => 'required',
             'kategori_pekerjaan1' => 'nullable',
@@ -48,6 +59,15 @@ class PekerjaanController extends Controller
             'relevansi_pekerjaan' => 'required'
         ]);
 
+        $kelurahan = Village::where('id', $validatedData['kelurahan'])->first()->name;
+        $kecamatan = District::where('id', $validatedData['kecamatan'])->first()->name;
+        $kabupaten = Regency::where('id', $validatedData['kabupaten'])->first()->name;
+        $provinsi = Province::where('id', $validatedData['provinsi'])->first()->name;
+
+        $validatedData["kelurahan"] = $kelurahan;
+        $validatedData["kecamatan"] = $kecamatan;
+        $validatedData["kabupaten"] = $kabupaten;
+        $validatedData["provinsi"] = $provinsi;
         // return $validatedData;
 
         Pekerjaan::create($validatedData);
@@ -67,9 +87,10 @@ class PekerjaanController extends Controller
      */
     public function edit($id)
     {
-        return view("alumni.works.edit",[
+        $provinces = Province::all();
+        return view("alumni.works.edit", [
             'pekerjaan' => Pekerjaan::find($id)
-        ]);
+        ], compact('provinces'));
     }
 
     /**
@@ -84,10 +105,25 @@ class PekerjaanController extends Controller
             'kategori_pekerjaan3' => 'nullable',
             'nama_pekerjaan' => "required",
             'tempat_pekerjaan' => 'required',
+            'kelurahan' => 'required',
+            'kecamatan' => 'required',
+            'kabupaten' => 'required',
+            'provinsi' => 'required',
+            'koordinat' => 'required',
             'tanggal_pekerjaan' => 'required',
             'gaji' => 'required',
             'relevansi_pekerjaan' => 'required'
         ]);
+
+        $kelurahan = Village::where('id', $validatedData['kelurahan'])->first()->name;
+        $kecamatan = District::where('id', $validatedData['kecamatan'])->first()->name;
+        $kabupaten = Regency::where('id', $validatedData['kabupaten'])->first()->name;
+        $provinsi = Province::where('id', $validatedData['provinsi'])->first()->name;
+
+        $validatedData["kelurahan"] = $kelurahan;
+        $validatedData["kecamatan"] = $kecamatan;
+        $validatedData["kabupaten"] = $kabupaten;
+        $validatedData["provinsi"] = $provinsi;
 
         // return $validatedData;
 

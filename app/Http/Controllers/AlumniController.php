@@ -21,7 +21,6 @@ class AlumniController extends Controller
         return view("alumni.bios.index", [
             "biodatas" => Biodata::where('nim', auth()->user()->nim)->get()
         ]);
-        
     }
 
     /**
@@ -31,9 +30,8 @@ class AlumniController extends Controller
     {
         $provinces = Province::all();
         return view("alumni.bios.create", compact('provinces'));
-        
     }
-    
+
 
 
     /**
@@ -77,10 +75,12 @@ class AlumniController extends Controller
         $validatedData["provinsi"] = $provinsi;
 
 
-        if($request->file('foto')){
+        if ($request->file('foto')) {
             $validatedData['foto'] = $request->file('foto')->store('img');
+            $file = $request->file('foto');
+            $path = $file->store('public/img');
         }
-        if($request->file('fotoIjazah')){
+        if ($request->file('fotoIjazah')) {
             $validatedData['fotoIjazah'] = $request->file('fotoIjazah')->store('ijazah');
         }
         // return $validatedData;
@@ -94,7 +94,7 @@ class AlumniController extends Controller
      */
     public function show(Biodata $biodata)
     {
-        return view("alumni.bios.show",[
+        return view("alumni.bios.show", [
             'bio' => $biodata
         ]);
     }
@@ -105,7 +105,7 @@ class AlumniController extends Controller
     public function edit($nim)
     {
         $provinces = Province::all();
-        return view("alumni.bios.edit",[
+        return view("alumni.bios.edit", [
             'bio' => Biodata::find($nim)
         ], compact('provinces'));
     }
@@ -150,12 +150,12 @@ class AlumniController extends Controller
         $validatedData["kabupaten"] = $kabupaten;
         $validatedData["provinsi"] = $provinsi;
 
-        if($request->file('foto')){
+        if ($request->file('foto')) {
             $validatedData['foto'] = $request->file('foto')->store('img');
             $file = $request->file('foto');
             $path = $file->store('public/img');
         }
-        if($request->file('fotoIjazah')){
+        if ($request->file('fotoIjazah')) {
             $validatedData['fotoIjazah'] = $request->file('fotoIjazah')->store('ijazah');
         }
 

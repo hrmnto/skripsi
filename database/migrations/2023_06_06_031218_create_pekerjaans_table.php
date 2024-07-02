@@ -19,6 +19,11 @@ return new class extends Migration
             $table->string("kategori_pekerjaan3");
             $table->string("nama_pekerjaan");
             $table->string("tempat_pekerjaan")->nullable();
+            $table->string("kelurahan");
+            $table->string("kecamatan");
+            $table->string("kabupaten");
+            $table->string("provinsi");
+            $table->string("koordinat");
             $table->date("tanggal_pekerjaan");
             $table->integer("gaji");
             $table->string("relevansi_pekerjaan");

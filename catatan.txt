@@ -1,0 +1,6 @@
+revisi 
+
+Menu Pekerjaan
+  1.⁠ ⁠tombol detail (side bar) 
+  2.⁠ Tambahkan ⁠lokasi pekerjaan pada halaman alumni/work
+  3

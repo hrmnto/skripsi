@@ -6,6 +6,8 @@ use App\Models\Pekerjaan;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\WorkController;
 
+
+
 // Route::get('/alumni/works/{work}', [WorkController::class, 'show']);
 
 class WorkController extends Controller
@@ -25,7 +27,6 @@ class WorkController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -41,8 +42,10 @@ class WorkController extends Controller
      */
     public function show($id)
     {
-        return view("alumni.works.show",[
-            'pekerjaan' => Pekerjaan::find($id)
+
+        return view("alumni.works.show", [
+            'pekerjaan' => Pekerjaan::find($id),
+
         ]);
     }
 

@@ -55,7 +55,7 @@ use App\Http\Controllers\DependantDropdownController;
 //         $alumniAngkatan2022 = [0,0,0,0,0,0,0,0];
 //         $ipk = [0,0,0,0,0];
 //         $totalIPK = 0;
-    
+
 //         foreach ($biodatas as $biodata) {
 //             $tgl1 = new DateTime($biodata->tglMasuk);
 //             $tgl2 = new DateTime($biodata->tglLulus);
@@ -64,7 +64,7 @@ use App\Http\Controllers\DependantDropdownController;
 //             $dataKuliah[] = $selisih;
 //             $dataNama[] = $biodata->name; 
 //             $total += $selisih;
-    
+
 //             $totalIPK += $biodata->ipk;
 //             if($biodata->ipk > 2.4 && $biodata->ipk <= 2.7){
 //                 $ipk[0] += 1;
@@ -77,7 +77,7 @@ use App\Http\Controllers\DependantDropdownController;
 //             }else if($biodata->ipk > 3.6 && $biodata->ipk <= 3.9){
 //                 $ipk[4] += 1;
 //             }
-    
+
 //             if($selisih > 6){
 //                 $warnaBar[] = "#B70404";
 //                 $kelulusanLebih6Thn[] = $selisih;
@@ -88,7 +88,7 @@ use App\Http\Controllers\DependantDropdownController;
 //                 $warnaBar[] = "#47A992";
 //                 $kelulusanKurang4Thn[] = $selisih;
 //             }
-    
+
 //             $tahunLulus = explode('-', $biodata->tglLulus);
 //             $tahunLulus = $tahunLulus[0];
 //             if($tahunLulus == 2020){
@@ -104,7 +104,7 @@ use App\Http\Controllers\DependantDropdownController;
 //             }else if($tahunLulus == 2025){
 //                 $kelulusan_2025[] = $biodata->nim;
 //             }
-    
+
 //             $tahunMasuk = explode('-', $biodata->tglMasuk);
 //             $tahunMasuk = $tahunMasuk[0];
 //             if($tahunMasuk == 2016){
@@ -207,16 +207,16 @@ use App\Http\Controllers\DependantDropdownController;
 //                 } 
 //             }
 //         }
-       
-    
+
+
 //         $pRelevan = [0,0,0];
 //         $kategoriPekerjaan1 = [];
 //         $kategoriPekerjaan2 = [];
 //         $kategoriPekerjaan3 = [];
 //         $kategoriPekerjaan4 = [];
-    
+
 //         $gajiAlumni = [0,0,0,0,0,0,0,0,0];
-    
+
 //         $totalGaji = 0;
 //         $rentangKerja = [0,0,0,0,0,0,0];
 //         $totalTahunKerja = 0;
@@ -224,7 +224,7 @@ use App\Http\Controllers\DependantDropdownController;
 //         for($i = count($pekerjaans)-1; $i > -1; $i--){
 //             if(!(in_array($pekerjaans[$i]->nim, $nim))){
 //                 $nim[] = $pekerjaans[$i]->nim;
-                
+
 //                 if($pekerjaans[$i]->relevansi_pekerjaan == "tinggi"){
 //                     $pRelevan[0] += 1;
 //                 }else if($pekerjaans[$i]->relevansi_pekerjaan == "sedang"){
@@ -232,8 +232,8 @@ use App\Http\Controllers\DependantDropdownController;
 //                 }else if($pekerjaans[$i]->relevansi_pekerjaan == "rendah"){
 //                     $pRelevan[2] += 1;
 //                 }
-    
-    
+
+
 //                 if($pekerjaans[$i]->kategori_pekerjaan1 == 1){
 //                     $kategoriPekerjaan1[] = $pekerjaans[$i]->biodata->nim;
 //                 }
@@ -243,12 +243,12 @@ use App\Http\Controllers\DependantDropdownController;
 //                 if($pekerjaans[$i]->kategori_pekerjaan3 == 1){
 //                     $kategoriPekerjaan3[] = $pekerjaans[$i]->biodata->nim;
 //                 }
-    
-                
+
+
 //                 $tglKerja1 = new DateTime($pekerjaans[$i]->biodata->tglLulus);
 //                 $tglKerja2 = new DateTime($pekerjaans[$i]->tanggal_pekerjaan);
 //                 $jarakKerja = $tglKerja2->diff($tglKerja1);
-    
+
 //                 if($jarakKerja->y >= 6){
 //                     $rentangKerja[6] += 1;
 //                     $totalTahunKerja += $jarakKerja->y;
@@ -271,7 +271,7 @@ use App\Http\Controllers\DependantDropdownController;
 //                     $rentangKerja[0] += 1;
 //                     $totalTahunKerja += $jarakKerja->y;
 //                 }
-    
+
 //                 if($pekerjaans[$i]->gaji >= 1000000 && $pekerjaans[$i]->gaji <= 3000000){
 //                     $gajiAlumni[0] += 1;
 //                     $totalGaji += $pekerjaans[$i]->gaji;
@@ -303,12 +303,12 @@ use App\Http\Controllers\DependantDropdownController;
 //             }
 //         }
 //         $avg = $total / count($biodatas);
-    
-    
+
+
 //         $avgGaji = $totalGaji / count($nim);
 
 
-    
+
 //     return view('home', [
 //         "title" => "home",
 //         "biodatas" => $biodatas,
@@ -345,14 +345,14 @@ use App\Http\Controllers\DependantDropdownController;
 //         "ipk" => $ipk,
 //         "avgIPK" => $totalIPK/count($biodatas),
 //         "avgRKerja" => $totalTahunKerja/count(Biodata::where("pekerjaan", "sudah")->get()),
-        
+
 //     ]);
 // }else{
 //     return view('home', [
 //         "title" => "home",
 //         "biodatas" => Biodata::all(),
 //         "pekerjaans" => Pekerjaan::all(),
-    
+
 //     ]);
 // }
 // });
@@ -379,6 +379,10 @@ Route::post('/getKelurahan', [IndoRegionController::class, "getKelurahan"])->nam
 // Route::get('/alumni/works/{work:id}', [PekerjaanController::class, 'show']); 
 // Route::resource('/alumni/works', PekerjaanController::class)->middleware("auth");
 Route::resource('/alumni/works', PekerjaanController::class)->middleware("auth");
+Route::post('/getKabupaten', [IndoRegionController::class, "getKabupaten"])->name('getKabupaten')->middleware("auth");
+Route::post('/getKecamatan', [IndoRegionController::class, "getKecamatan"])->name('getKecamatan')->middleware("auth");
+Route::post('/getKelurahan', [IndoRegionController::class, "getKelurahan"])->name('getKelurahan')->middleware("auth");
+
 Route::resource('/admin/user', AdminController::class)->middleware("auth");
 Route::resource('/admin/biodata', AdminBiodataController::class)->middleware("auth");
 Route::resource('/admin/pekerjaan', AdminPekerjaanController::class)->middleware("auth");
@@ -405,4 +409,3 @@ Route::get('/lacak', [LacakController::class, "index"]);
 Route::get('pekerjaan-import-export', [AdminPekerjaanController::class, 'fileImportExport']);
 Route::post('pekerjaan-import', [AdminPekerjaanController::class, 'fileImport'])->name('pekerjaan-import');
 Route::get('pekerjaan-export', [AdminPekerjaanController::class, 'fileExport'])->name('pekerjaan-export');
-
