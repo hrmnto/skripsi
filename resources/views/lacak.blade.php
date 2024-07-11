@@ -1,6 +1,5 @@
 
 @extends("layouts.main")
-
 <style>
 
     span{
@@ -83,7 +82,6 @@
 
 <div id="particles- js"></div>
   <div class="container-fluid px-5">
-
         <div class="row justify-content-center align-items-center" style="height: 100vh" id="about">
             <div class="col-sm-12">
                 {{-- <h2 class="fw-bold">Persebaran Alumni</h2> --}}
@@ -91,17 +89,36 @@
           </div>
         </div>
       </div>
-     
-          
       
+
+<!-- Modal -->
+<div class="modal fade" id="alumniDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Alumni</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h2 class="fs-6">Nama Alumni :</h2>  <span id="nama"></span> <br>
+        <h2 class="fs-6">NIM :</h2><span id="nim"></span> <br>
+        <h2 class="fs-6">Jenis Kelamin : </h2> <span id="jk"></span> <br>
+        <h2 class="fs-6">Riwayat Pekerjaan : </h2> 
+        <ul id="riwayat-pekerjaan"></ul> <!-- Tambahkan elemen ini -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
       <script>
 
                  // basemap
             var map = L.map('map').setView([-3.298618801108944,114.58542404981114], 13.46);
-            // map.on('contextmenu', () => {
-            //     map.off();
-            //   })
-            // icon marker
+      
             var ulmIcon = L.icon({
             iconUrl: "/img/Logo_ULM.png",
             iconSize:     [50, 50], // size of the icon
@@ -125,10 +142,6 @@
             iconSize:     [70, 70],
             });
 
-            
-
-
-
         //     L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
         // maxZoom: 20,
         // subdomains:['mt0','mt1','mt2','mt3']
@@ -151,7 +164,21 @@
             @foreach ($biodatas as $biodata)
             @php
                 $koordinats = explode(",", $biodata["koordinat"]);
+                $riwayatPekerjaan = $biodata->works->map(function($work) {
+            return [
+                'nama_pekerjaan' => $work->nama_pekerjaan,
+                'tempat_pekerjaan' => $work->tempat_pekerjaan,
+                'tanggal_pekerjaan' => $work->tanggal_pekerjaan,
+                'gaji' => $work->gaji,
+                'relevansi_pekerjaan' => $work->relevansi_pekerjaan
+            ];
+        });
+        $riwayatPekerjaanJSON = json_encode($riwayatPekerjaan);// Asumsikan $biodata["riwayat_pekerjaan"] adalah array
             @endphp
+            
+      
+
+
             var latitude = {{$koordinats[0]}},
                 longitude = {{$koordinats[1]}}
                 @if ($biodata["jk"] == "laki-laki")
@@ -161,13 +188,15 @@
                 @endif
                 L.marker([latitude, longitude ], {icon:icon})
                 .addTo(map)
-                
                 .bindPopup(
-                    `Nama : {{$biodata["name"]}} <br>
-                    NIM : {{$biodata["nim"]}} <br><br>
+                    `Biodata Alumni <br><br>
+                     Nama : {{$biodata["name"]}} <br>
+                     NIM  : {{$biodata["nim"]}} <br><br>
                     <img src="{{asset('storage/' . $biodata->foto) }}" class="img-thumbnail" alt="{{$biodata["name"]}}"><br><br>
                     <button class="btn btn-sm btn-outline-success" onclick = 'return showRute(${latitude}, ${longitude})'> Rute kesini </button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="showDetailAlumni('{{$biodata["name"]}}', '{{$biodata["nim"]}}', '{{$biodata["jk"]}}', {{$riwayatPekerjaanJSON}})">Detail Alumni</button>
                     `);
+                    
             @endforeach
 
             var control = L.Routing.control({
@@ -239,7 +268,7 @@
                                     html: `${feature.properties.WADMKC}`
 
                                 });
-                                console.log(feature.properties.WADMKC)
+                                
                             // if(feature.properties.WADMKC){
 
                                 html = html + `
@@ -248,7 +277,7 @@
                             </div>
                             `;
                             
-                            // console.log(html)
+           
                             sub.push(L.markerClusterGroup().addLayer(layer) ) ;
                             L.marker(layer.getBounds().getCenter(), {icon:iconLabel}).addTo(sub[batasKecamatan.length]);
                             
@@ -293,7 +322,6 @@
 
                         legend.addTo(map);
 
-
                 // L.control.slideMenu(html).addTo(map);
           
 function showBatas(v, i){
@@ -334,6 +362,43 @@ console.log(span)
         // map.flyTo(batasKecamatan[i].getBounds().getCenter());
     }
 }
+
+//Menambahkan detail Alumni
+function showDetailAlumni(nama, nim, jk, riwayatPekerjaan) {
+    document.getElementById('nama').innerText = nama;
+    document.getElementById('nim').innerText = nim;
+    document.getElementById('jk').innerText = jk;
+
+    // Kosongkan daftar riwayat pekerjaan sebelum menambahkan yang baru
+    var riwayatPekerjaanList = document.getElementById('riwayat-pekerjaan');
+    riwayatPekerjaanList.innerHTML = '';
+
+    // Pastikan riwayatPekerjaan adalah array
+    if (Array.isArray(riwayatPekerjaan) && riwayatPekerjaan.length > 0) {
+        // Tambahkan setiap riwayat pekerjaan ke dalam daftar
+        riwayatPekerjaan.forEach(function(pekerjaan) {
+            var li = document.createElement('li');
+            li.innerHTML = `
+                <strong>Nama Pekerjaan:</strong> ${pekerjaan.nama_pekerjaan} <br>
+                <strong>Tempat Pekerjaan:</strong> ${pekerjaan.tempat_pekerjaan} <br>
+                <strong>Tanggal Pekerjaan:</strong> ${pekerjaan.tanggal_pekerjaan} <br>
+                <strong>Gaji:</strong> ${pekerjaan.gaji} <br>
+                <strong>Relevansi Pekerjaan:</strong> ${pekerjaan.relevansi_pekerjaan} <br>
+            `;
+            riwayatPekerjaanList.appendChild(li);
+        });
+    } else {
+        var li = document.createElement('li');
+        li.innerText = 'Tidak ada data riwayat pekerjaan';
+        riwayatPekerjaanList.appendChild(li);
+    }
+
+    var modal = new bootstrap.Modal(document.getElementById('alumniDetail'), {});
+    modal.show();
+}
+
+
+
 
       </script>
 <!-- After Leaflet script -->

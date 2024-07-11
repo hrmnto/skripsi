@@ -50,15 +50,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   {{-- routing machine --}}
   <link rel="stylesheet" href="/js/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-  <script src="/js/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+  <!-- <script src="/js/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script> -->
 
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
+  <!-- <script>
     import Swal from 'sweetalert2'
 
     const Swal = require('sweetalert2')
-  </script>
+  </script> -->
 
   {{-- particle js --}}
   <link rel="stylesheet" media="screen" href="css/style.css">
@@ -136,6 +138,7 @@
 
   <script src="js/particles.js"></script>
   <script src="js/app.js"></script>
+
   {{-- <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
     <script>
       particlesJS("particles-js", 

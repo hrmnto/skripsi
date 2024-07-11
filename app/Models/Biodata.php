@@ -13,24 +13,24 @@ class Biodata extends Model
         'name',
         'user_id',
         'foto',
-            'nim',
-            'tglLulus',
-            'tglMasuk',
-            'jk',
-            'tempatLahir',
-            'kelurahan',
-            'kecamatan',
-            'kabupaten',
-            'provinsi',
-            'tglLahir',
-            'agama',
-            'pekerjaan',
-            'kawin',
-            'ipk',
-            'kontak',
-            'noIjazah',
-            'fotoIjazah',
-            'koordinat'
+        'nim',
+        'tglLulus',
+        'tglMasuk',
+        'jk',
+        'tempatLahir',
+        'kelurahan',
+        'kecamatan',
+        'kabupaten',
+        'provinsi',
+        'tglLahir',
+        'agama',
+        'pekerjaan',
+        'kawin',
+        'ipk',
+        'kontak',
+        'noIjazah',
+        'fotoIjazah',
+        'koordinat'
 
 
     ];
@@ -38,11 +38,13 @@ class Biodata extends Model
     protected $primaryKey = 'nim';
     protected $keyType = 'string';
 
-    public function user(){
+    public function user()
+    {
         return $this->hasOne(User::class);
     }
 
-    public function works(){
+    public function works()
+    {
         return $this->hasMany(Pekerjaan::class, "nim", "nim");
     }
 }
