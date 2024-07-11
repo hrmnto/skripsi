@@ -170,10 +170,12 @@
                 'tempat_pekerjaan' => $work->tempat_pekerjaan,
                 'tanggal_pekerjaan' => $work->tanggal_pekerjaan,
                 'gaji' => $work->gaji,
-                'relevansi_pekerjaan' => $work->relevansi_pekerjaan
+                'relevansi_pekerjaan' => $work->relevansi_pekerjaan,
+                'latitude' => explode(',', $work->koordinat)[0], // Ambil latitude dari koordinat
+                'longitude' => explode(',', $work->koordinat)[1], // Ambil longitude dari koordinat
             ];
         });
-        $riwayatPekerjaanJSON = json_encode($riwayatPekerjaan);// Asumsikan $biodata["riwayat_pekerjaan"] adalah array
+        $riwayatPekerjaanJSON = json_encode($riwayatPekerjaan);
             @endphp
             
       
@@ -363,19 +365,18 @@ console.log(span)
     }
 }
 
-//Menambahkan detail Alumni
+
+//menampilkan detail alumni
+
 function showDetailAlumni(nama, nim, jk, riwayatPekerjaan) {
     document.getElementById('nama').innerText = nama;
     document.getElementById('nim').innerText = nim;
     document.getElementById('jk').innerText = jk;
 
-    // Kosongkan daftar riwayat pekerjaan sebelum menambahkan yang baru
     var riwayatPekerjaanList = document.getElementById('riwayat-pekerjaan');
     riwayatPekerjaanList.innerHTML = '';
 
-    // Pastikan riwayatPekerjaan adalah array
     if (Array.isArray(riwayatPekerjaan) && riwayatPekerjaan.length > 0) {
-        // Tambahkan setiap riwayat pekerjaan ke dalam daftar
         riwayatPekerjaan.forEach(function(pekerjaan) {
             var li = document.createElement('li');
             li.innerHTML = `
@@ -384,6 +385,8 @@ function showDetailAlumni(nama, nim, jk, riwayatPekerjaan) {
                 <strong>Tanggal Pekerjaan:</strong> ${pekerjaan.tanggal_pekerjaan} <br>
                 <strong>Gaji:</strong> ${pekerjaan.gaji} <br>
                 <strong>Relevansi Pekerjaan:</strong> ${pekerjaan.relevansi_pekerjaan} <br>
+                <button class="btn btn-sm btn-outline-primary" onclick="showRute(${pekerjaan.latitude}, ${pekerjaan.longitude}); closeModal()">Rute ke Pekerjaan</button>
+                <hr>
             `;
             riwayatPekerjaanList.appendChild(li);
         });
@@ -397,8 +400,10 @@ function showDetailAlumni(nama, nim, jk, riwayatPekerjaan) {
     modal.show();
 }
 
-
-
+function closeModal() {
+    var modal = bootstrap.Modal.getInstance(document.getElementById('alumniDetail'));
+    modal.hide();
+}
 
       </script>
 <!-- After Leaflet script -->
