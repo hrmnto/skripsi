@@ -19,13 +19,8 @@ class AdminBiodataController extends Controller
      */
     public function index()
     {
-        return view("adminDash.biodata.index", [
-            "biodatas" => DB::table('biodatas')
-            ->orderBy('tglMasuk', 'asc')
-            ->orderBy('name', 'asc')
-            ->get()
-            // "biodatas" => Biodata::all(),
-        ]);
+        $data['biodatas'] = Biodata::all()->toArray();
+        return view("adminDash.biodata.index", $data);
     }
 
     public function fileImportExport()

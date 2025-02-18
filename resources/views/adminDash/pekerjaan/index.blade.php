@@ -84,11 +84,12 @@ use Carbon\Carbon;
     </tr>
   </thead>
   <tbody class="shadow rounded">
+   
   @foreach ($pekerjaans as $pekerjaan)
 
     <tr>
         <th scope="row">{{ $loop->iteration }}</th>
-        <td>{{ $pekerjaan->biodata->name }}</td>
+        <td>{{ $pekerjaan->nama_pekerjaan }}</td>
         <td>{{$pekerjaan->kategori_pekerjaan1 == 1 ? 'Kependidikan': ''}}, {{$pekerjaan->kategori_pekerjaan2 == 1 ? 'IT': ''}}, {{$pekerjaan->kategori_pekerjaan3 == 1 ? 'Wirausaha': ''}}</td>
         <td>{{ $pekerjaan->nama_pekerjaan }}</td>
         <td>{{date('d F Y', strtotime($pekerjaan->biodata->tglLulus))}}</td>

@@ -17,9 +17,9 @@ class AdminPekerjaanController extends Controller
      */
     public function index()
     {
-        return view("adminDash.pekerjaan.index", [
-            "pekerjaans" => Pekerjaan::all(),
-        ]);
+        $data['pekerjaans'] = Pekerjaan::all()->toArray();
+ 
+        return view("adminDash.pekerjaan.index", $data);
     }
 
     public function fileImportExport()

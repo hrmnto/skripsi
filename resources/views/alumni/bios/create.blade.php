@@ -169,7 +169,7 @@ crossorigin=""/>
     <div class="mb-3">
         <label for="pekerjaan" class="form-label">Status Pekerjaan</label>
         <select class="form-select" aria-label="Default select example" name="pekerjaan">
-            <option selected>--Pilih Status Pekerjaan--</option>
+            <option selected>--Status Pekerjaan--</option>
             <option value="belum">Belum Bekerja</option>
             <option value="sudah">Sudah Bekerja</option>
           </select>
