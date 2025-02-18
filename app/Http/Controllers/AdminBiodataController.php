@@ -19,30 +19,30 @@ class AdminBiodataController extends Controller
      */
     public function index()
     {
-        $data['biodatas'] = Biodata::all()->toArray();
+        $data['biodatas'] = Biodata::all();
         return view("adminDash.biodata.index", $data);
     }
 
     public function fileImportExport()
     {
-       return view('biodata-import');
+        return view('biodata-import');
     }
-   
+
     /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function fileImport(Request $request) 
+     * @return \Illuminate\Support\Collection
+     */
+    public function fileImport(Request $request)
     {
         Excel::import(new BiodataImport, $request->file('file')->store('temp'));
         return back();
     }
     /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function fileExport() 
+     * @return \Illuminate\Support\Collection
+     */
+    public function fileExport()
     {
         return Excel::download(new BiodataExport, 'data biodata tracer study.xlsx');
-    }    
+    }
     /**
      * Show the form for creating a new resource.
      */

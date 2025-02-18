@@ -17,31 +17,31 @@ class AdminPekerjaanController extends Controller
      */
     public function index()
     {
-        $data['pekerjaans'] = Pekerjaan::all()->toArray();
- 
+        $data['pekerjaans'] = Pekerjaan::all();
+
         return view("adminDash.pekerjaan.index", $data);
     }
 
     public function fileImportExport()
     {
-       return view('pekerjaan-import');
+        return view('pekerjaan-import');
     }
-   
+
     /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function fileImport(Request $request) 
+     * @return \Illuminate\Support\Collection
+     */
+    public function fileImport(Request $request)
     {
         Excel::import(new PekerjaanImport, $request->file('file')->store('temp'));
         return back();
     }
     /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function fileExport() 
+     * @return \Illuminate\Support\Collection
+     */
+    public function fileExport()
     {
         return Excel::download(new PekerjaanExport, 'data pekerjaan tracer study.xlsx');
-    }    
+    }
 
     /**
      * Show the form for creating a new resource.
