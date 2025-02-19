@@ -75,7 +75,7 @@ use Carbon\Carbon;
     <thead>
       <tr>
         <th scope="col">No. </th>
-        <th scope="col">Nama</th>
+        <th scope="col">Nama Pekerjaan</th>
         <th scope="col">Kategori Pekerjaan</th>
         <th scope="col">Bekerja Sebagai</th>
         <th scope="col">Tahun Kelulusan</th>
@@ -91,7 +91,7 @@ use Carbon\Carbon;
       <tr>
         <th scope="row">{{ $loop->iteration }}</th>
         <td>{{ $pekerjaan->nama_pekerjaan }}</td>
-        <td>{{$pekerjaan->kategori_pekerjaan1 == 1 ? 'Kependidikan': ''}}, {{$pekerjaan->kategori_pekerjaan2 == 1 ? 'IT': ''}}, {{$pekerjaan->kategori_pekerjaan3 == 1 ? 'Wirausaha': ''}}</td>
+        <td>{{$pekerjaan->kategori_pekerjaan1 == 1 ? 'Kependidikan, ': ''}}{{$pekerjaan->kategori_pekerjaan2 == 1 ? 'IT, ': ''}} {{$pekerjaan->kategori_pekerjaan3 == 1 ? 'Wirausaha': ''}}</td>
         <td>{{ $pekerjaan->nama_pekerjaan }}</td>
         <td>{{date('d F Y', strtotime($pekerjaan->biodata->tglLulus))}}</td>
         @php

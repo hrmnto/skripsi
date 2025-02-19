@@ -40,7 +40,7 @@ use Carbon\Carbon;
             <h6 class="fw-bold">{{$work->biodata->name}}</h6>
 
             <label class="text-secondary" for="">Kategori Pekerjaan</label>
-            <h6 class="fw-bold">{{$work->kategori_pekerjaan1 == 1 ? 'Kependidikan': ''}}, {{$work->kategori_pekerjaan2 == 1 ? 'IT': ''}}, {{$work->kategori_pekerjaan3 == 1 ? 'Wirausaha': ''}}</h6>
+            <h6 class="fw-bold">{{$work->kategori_pekerjaan1 == 1 ? 'Kependidikan, ': ''}} {{$work->kategori_pekerjaan2 == 1 ? 'IT, ': ''}} {{$work->kategori_pekerjaan3 == 1 ? 'Wirausaha': ''}}</h6>
 
             <label class="text-secondary" for="">Bekerja Sebagai</label>
             <h6 class="fw-bold">{{$work->nama_pekerjaan}}</h6>
