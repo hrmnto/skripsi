@@ -130,42 +130,43 @@ crossorigin=""/>
     <div id="map2"></div>
 
     <div class="mb-3">
-        <label for="jk" class="form-label">Jenis Kelamin</label>
-        <select id="jk" class="form-select" aria-label="Default select example" name="jk" >
-            <option selected value="{{ $bio->jk }}">{{ $bio->jk }}</option>
-            <option value="laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-          </select>
+    <label for="jk" class="form-label">Jenis Kelamin</label>
+    <select id="jk" class="form-select" aria-label="Default select example" name="jk">
+        <option value="" disabled {{ $bio->jk ? '' : 'selected' }}>-- Silahkan Pilih --</option>
+        <option value="laki-laki" {{ $bio->jk == 'laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+        <option value="Perempuan" {{ $bio->jk == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+    </select>
     </div>
 
     <div class="mb-3">
-        <label for="agama" class="form-label">Agama</label>
-        <select class="form-select" aria-label="Default select example" name="agama">
-            <option selected value="{{ $bio->agama }}">{{ $bio->agama }}</option>
-            <option value="islam">Islam</option>
-            <option value="kristen">Kristen</option>
-            <option value="hindu">Hindu</option>
-            <option value="buddha">Buddha</option>
-          </select>
-    </div>
+    <label for="agama" class="form-label">Agama</label>
+    <select class="form-select" aria-label="Default select example" name="agama">
+        <option value="" disabled {{ $bio->agama ? '' : 'selected' }}>-- Silahkan Pilih --</option>
+        <option value="islam" {{ $bio->agama == 'islam' ? 'selected' : '' }}>Islam</option>
+        <option value="kristen" {{ $bio->agama == 'kristen' ? 'selected' : '' }}>Kristen</option>
+        <option value="hindu" {{ $bio->agama == 'hindu' ? 'selected' : '' }}>Hindu</option>
+        <option value="buddha" {{ $bio->agama == 'buddha' ? 'selected' : '' }}>Buddha</option>
+    </select>
+</div>
 
     <div class="mb-3">
         <label for="kawin" class="form-label">Status Perkawinan</label>
         <select id="kawin" class="form-select" aria-label="Default select example" name="kawin">
-            <option selected value="{{ $bio->kawin }}">{{ $bio->kawin  }}</option>
-            <option value="belum">Belum Menikah</option>
-            <option value="sudah">Sudah Menikah</option>
-          </select>
+             <option value="" selected disabled>-- Silakan Pilih --</option>         
+             <option value="belum" @if($bio->kawin == 'belum') selected @endif>Belum Menikah</option>
+             <option value="sudah" @if($bio->kawin == 'sudah') selected @endif>Sudah Menikah</option>
+        </select>
+
     </div>
 
     <div class="mb-3">
-        <label for="pekerjaan" class="form-label">Status Pekerjaan</label>
-        <select class="form-select" aria-label="Default select example" name="pekerjaan">
-            <option selected value="{{ $bio->pekerjaan }}"> {{ $bio->pekerjaan }}</option>
-            <option value="belum">Belum Bekerja</option>
-            <option value="sudah">Sudah Bekerja</option>
-          </select>
-    </div>
+    <label for="pekerjaan" class="form-label">Status Pekerjaan</label>
+    <select class="form-select" aria-label="Default select example" name="pekerjaan">
+        <option value="" selected disabled>-- Silahkan Pilih --</option>
+        <option value="belum" @if($bio->pekerjaan == 'belum') selected @endif>Belum Bekerja</option>
+        <option value="sudah" @if($bio->pekerjaan == 'sudah') selected @endif>Sudah Bekerja</option>
+    </select>
+</div>
     
 
 
