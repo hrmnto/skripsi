@@ -1,0 +1,11 @@
+ALTER TABLE skripsi.biodatas MODIFY COLUMN nim varchar(255) NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN kawin varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'belum' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN pekerjaan varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'sudah' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN jk varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'laki-laki' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN agama varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'islam' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN provinsi varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'KALIMANTAN SELATAN' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN kabupaten varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'KOTA BANJAR BARU' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN kecamatan varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'BANJAR BARU UTARA' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN kelurahan varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'SUNGAI ULIN' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN noIjazah varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '572012020001073' NOT NULL;
+ALTER TABLE skripsi.biodatas MODIFY COLUMN koordinat varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '-3.298197308517131, 114.59097418887472' NOT NULL;
