@@ -10,9 +10,14 @@ class Pekerjaan extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'gaji' => 'float',
+    ];
+
     protected $guarded = ["id"];
 
-    public function biodata(){
+    public function biodata()
+    {
         return $this->belongsTo(Biodata::class, "nim", "nim");
     }
 }

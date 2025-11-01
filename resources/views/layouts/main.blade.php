@@ -36,7 +36,7 @@
         <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script> --}}
 
 
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
   {{-- cluster --}}
   <link rel="stylesheet" href="js/Leaflet.markercluster/dist/MarkerCluster.css" />

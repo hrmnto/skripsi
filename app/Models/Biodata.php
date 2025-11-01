@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Biodata extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'ipk' => 'float',
+    ];
 
     protected $fillable = [
         'name',

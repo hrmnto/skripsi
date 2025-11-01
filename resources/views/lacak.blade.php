@@ -192,8 +192,8 @@
                 .addTo(map)
                 .bindPopup(
                     `Biodata Alumni <br><br>
-                     Nama : {{$biodata["name"]}} <br>
-                     NIM  : {{$biodata["nim"]}} <br><br>
+                     Nama : {{ e($biodata->name) }} <br>
+                     NIM  : {{ e($biodata->nim) }} <br><br>
                     <img src="{{asset('storage/' . $biodata->foto) }}" class="img-thumbnail" alt="{{$biodata["name"]}}"><br><br>
                     <button class="btn btn-sm btn-outline-success" onclick = 'return showRute(${latitude}, ${longitude})'> Rute kesini </button>
                     <button type="button" class="btn btn-sm btn-outline-primary" onclick="showDetailAlumni('{{$biodata["name"]}}', '{{$biodata["nim"]}}', '{{$biodata["jk"]}}', {{$riwayatPekerjaanJSON}})">Detail Alumni</button>
