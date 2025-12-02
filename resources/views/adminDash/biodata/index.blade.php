@@ -39,8 +39,13 @@
                 @csrf
                 <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
                   <div class="custom-file text-left">
-                    <input type="file" name="file" class="custom-file-input" id="customFile">
+                    <input type="file" name="file" class="custom-file-input @error('file') is-invalid @enderror" id="customFile">
                     <label class="custom-file-label" for="customFile">Choose file</label>
+                    @error('file')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
                   </div>
                 </div>
             </div>

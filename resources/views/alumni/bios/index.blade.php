@@ -1,7 +1,9 @@
 @extends("alumni.layouts.main")
 @section("container")
 
-<h1 class="mt-4">Halaman Biodata</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Biodata Alumni</h1>
+</div>
 
 @if (session()->has('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -16,104 +18,103 @@
 </div>
 @endif
 
-@if (count($biodatas) < 1) 
-    <div class="col-sm-4 mt-5">
-        <div class="card shadow">
-            <div class="card-body">
-                <h5>Anda belum mengisi biodata, silahkan <a href="/alumni/bios/create">isi biodata</a></h5>
+@if (count($biodatas) < 1)
+    <div class="card shadow mb-4">
+        <div class="card-body text-center py-5">
+            <div class="mb-3">
+                <span data-feather="user-x" style="width: 64px; height: 64px; color: #e74a3b;"></span>
             </div>
+            <h4 class="text-gray-800">Biodata Belum Lengkap</h4>
+            <p class="text-muted mb-4">Anda belum mengisi biodata diri. Silahkan lengkapi data anda untuk melanjutkan.</p>
+            <a href="/alumni/bios/create" class="btn btn-primary px-4">
+                <span data-feather="edit" class="align-text-bottom"></span> Isi Biodata
+            </a>
         </div>
     </div>
-    @else
-
-
+@else
     @foreach ($biodatas as $biodata)
-    <div class="row">
-
-        <div class="col-sm-4 mt-5">
-            <div class="card shadow h-100">
-                <div class="card-body">
-
-            <!-- <label class="text-secondary" for="">Nama</label> -->
-            @if($biodata->foto)
-            <img src="{{ asset('storage/' . $biodata->foto) }}" class="img-thumbnail" alt="...">
-            {{-- <img src="{{asset('storage/' . $biodata->fotoIjazah) }}" class="img-thumbnail" alt="..."> --}}
-            @else
-            <img src="/img/noImage.png" class="img-thumbnail" alt="...">
-            @endif
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Detail Biodata</h6>
+            <a href="/alumni/bios/{{ $biodata->nim }}/edit" class="btn btn-sm btn-primary shadow-sm">
+                <span data-feather="edit" class="align-text-bottom"></span> Edit Biodata
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    @if($biodata->foto)
+                        <img src="{{ asset('storage/' . $biodata->foto) }}" class="img-fluid rounded shadow-sm mb-3" style="max-height: 300px; width: auto;" alt="Foto Profil">
+                    @else
+                        <img src="/img/noImage.png" class="img-fluid rounded shadow-sm mb-3" alt="No Image">
+                    @endif
+                    <h5 class="font-weight-bold text-dark">{{$biodata->name}}</h5>
+                    <p class="text-muted">{{$biodata->nim}}</p>
+                </div>
+                <div class="col-md-8">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Kontak</div>
+                        <div class="col-sm-8">{{$biodata->kontak}}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Tempat, Tanggal Lahir</div>
+                        <div class="col-sm-8">{{$biodata->tempatLahir}}, {{date('d F Y', strtotime($biodata->tglLahir))}}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Alamat</div>
+                        <div class="col-sm-8">
+                            Kelurahan {{ucfirst(strtolower($biodata->kelurahan))}}, 
+                            Kecamatan {{ucfirst(strtolower($biodata->kecamatan))}}, 
+                            {{ucfirst(strtolower($biodata->kabupaten))}}, 
+                            Provinsi {{ucfirst(strtolower($biodata->provinsi))}}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Jenis Kelamin</div>
+                        <div class="col-sm-8">{{$biodata->jk}}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Agama</div>
+                        <div class="col-sm-8">{{$biodata->agama}}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Status Pernikahan</div>
+                        <div class="col-sm-8">{{$biodata->kawin}} kawin</div>
+                    </div>
+                    <hr>
+                    <h6 class="text-primary font-weight-bold mb-3">Data Akademik</h6>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Tanggal Masuk</div>
+                        <div class="col-sm-8">{{date('d F Y', strtotime($biodata->tglMasuk))}}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Tanggal Kelulusan</div>
+                        <div class="col-sm-8">{{date('d F Y', strtotime($biodata->tglLulus))}}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">Lama Masa Studi</div>
+                        <div class="col-sm-8">
+                            @php
+                            $tgl1 = new DateTime($biodata->tglMasuk);
+                            $tgl2 = new DateTime($biodata->tglLulus);
+                            $jarak = $tgl2->diff($tgl1);
+                            $str = '';
+                            if($jarak->y != 0) $str .= $jarak->y . ' Tahun ';
+                            if($jarak->m != 0) $str .= $jarak->m . ' Bulan ';
+                            if($jarak->d != 0) $str .= $jarak->d . ' Hari ';
+                            @endphp
+                            {{$str}}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-secondary fw-bold">IPK</div>
+                        <div class="col-sm-8"><span class="badge bg-success">{{$biodata->ipk}}</span></div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-sm-6 mt-5">
-            <div class="card shadow h-100">
-                <div class="card-body">
-
-            <label class="text-secondary" for="">Nama</label>
-            <h6 class="fw-bold">{{$biodata->name}}</h6>
-
-            <label class="text-secondary" for="">NIM</label>
-            <h6 class="fw-bold">{{$biodata->nim}}</h6>
-
-            <label class="text-secondary" for="">Kontak</label>
-            <h6 class="fw-bold">{{$biodata->kontak}}</h6>
-
-            <label class="text-secondary" for="">Tempat Tanggal Lahir</label>
-            <h6 class="fw-bold">{{$biodata->tempatLahir}}, {{date('d F Y', strtotime($biodata->tglLahir))}}</h6>
-
-            <label class="text-secondary" for="">Alamat</label>
-            <h6 class="fw-bold">Kelurahan {{ucfirst(strtolower($biodata->kelurahan))}} Kecamatan {{ucfirst(strtolower($biodata->kecamatan))}} {{ucfirst(strtolower($biodata->kabupaten))}} Provinsi {{ucfirst(strtolower($biodata->provinsi))}}</h6>
-
-            <label class="text-secondary" for="">Jenis Kelamin</label>
-            <h6 class="fw-bold">{{$biodata->jk}}</h6>
-
-            <label class="text-secondary" for="">Agama</label>
-            <h6 class="fw-bold">{{$biodata->agama}}</h6>
-
-            <label class="text-secondary" for="">Status Pernikahan</label>
-            <h6 class="fw-bold">{{$biodata->kawin}} kawin</h6>
-
-            <label class="text-secondary" for="">Tanggal Masuk</label>
-            <h6 class="fw-bold">{{date('d F Y', strtotime($biodata->tglMasuk))}}</h6>
-
-            <label class="text-secondary" for="">Tanggal Kelulusan</label>
-            <h6 class="fw-bold">{{date('d F Y', strtotime($biodata->tglLulus))}}</h6>
-
-
-            <label class="text-secondary" for="">Lama Masa Studi</label>
-            @php
-            $tgl1 = new DateTime($biodata->tglMasuk);
-            $tgl2 = new DateTime($biodata->tglLulus);
-            $jarak = $tgl2->diff($tgl1);
-
-            $str = '';
-
-            if($jarak->y != 0){
-            $str .= $jarak->y . ' Tahun ';
-            }
-
-            if($jarak->m != 0){
-            $str .= $jarak->m . ' Bulan ';
-            }
-
-            if($jarak->d != 0){
-            $str .= $jarak->d . ' Hari ';
-            }
-
-            @endphp
-            <h6 class="fw-bold">{{$str}}</h6>
-
-            <label class="text-secondary" for="">IPK</label>
-            <h6 class="fw-bold">{{$biodata->ipk}}</h6>
-            <a class="btn btn-primary" href="/alumni/bios/{{ $biodata->nim }}/edit">Edit</a>
-
-
-        </div>
-    </div>
-</div>
     </div>
     @endforeach
+@endif
 
-    @endif
-
-    @endsection
+@endsection

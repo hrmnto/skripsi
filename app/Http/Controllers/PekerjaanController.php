@@ -40,7 +40,10 @@ class PekerjaanController extends Controller
      */
     public function store(StorePekerjaanRequest $request)
     {
-
+        $messages = [
+            'required' => ':attribute wajib diisi.',
+            'nullable' => ':attribute boleh kosong.',
+        ];
 
         $validatedData = $request->validate([
             'nim' => 'required',
@@ -57,7 +60,7 @@ class PekerjaanController extends Controller
             'kategori_pekerjaan2' => 'nullable',
             'kategori_pekerjaan3' => 'nullable',
             'relevansi_pekerjaan' => 'required'
-        ]);
+        ], $messages);
 
         $kelurahan = Village::where('id', $validatedData['kelurahan'])->first()->name;
         $kecamatan = District::where('id', $validatedData['kecamatan'])->first()->name;
@@ -98,6 +101,11 @@ class PekerjaanController extends Controller
      */
     public function update(UpdatePekerjaanRequest $request, $id)
     {
+        $messages = [
+            'required' => ':attribute wajib diisi.',
+            'nullable' => ':attribute boleh kosong.',
+        ];
+
         $validatedData = $request->validate([
             'nim' => 'required',
             'kategori_pekerjaan1' => 'nullable',
@@ -113,7 +121,7 @@ class PekerjaanController extends Controller
             'tanggal_pekerjaan' => 'required',
             'gaji' => 'required',
             'relevansi_pekerjaan' => 'required'
-        ]);
+        ], $messages);
 
         $kelurahan = Village::where('id', $validatedData['kelurahan'])->first()->name;
         $kecamatan = District::where('id', $validatedData['kecamatan'])->first()->name;
