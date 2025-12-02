@@ -8,7 +8,15 @@
                 <h1 class="display-4 fw-bold text-primary mb-4">Selamat Datang Di Website <span class="text-warning">Tracer Study</span></h1>
                 <h2 class="h3 text-dark mb-4">Prodi Pendidikan Komputer<br>Universitas Lambung Mangkurat</h2>
                 <p class="lead text-secondary mb-5">Mari sukseskan pelaksanaan <span class="fw-bold text-primary">Tracer Study</span> Prodi Pendidikan Komputer Universitas Lambung Mangkurat dengan mengisi biodata anda.</p>
-                <a href="/login" class="btn btn-primary btn-lg px-5 shadow-sm rounded-pill">Login Disini</a>
+                @if (!Auth::check())
+                <a href="/login" class="btn btn-primary btn-lg px-5 shadow-sm rounded-pill">Login Disini</a>   
+                @else
+                    @if (Auth::user()->name == 'admin')
+                    <a href="/admin/user" class="btn btn-outline-primary btn-lg px-5 shadow-sm rounded-pill">Masuk ke Dashboard Admin</a>
+                    @else
+                    <a href="/alumni/bios/{{ Auth::user()->nim }}/edit" class="btn btn-primary btn-lg px-5 shadow-sm rounded-pill">Lengkapi Biodata</a>
+                    @endif
+                @endif
             </div>
             <div class="col-lg-6 text-center" data-aos="fade-up">
                 <img class="img-fluid" style="max-height: 50vh;" src="img/alumni.png" alt="Alumni Illustration">
