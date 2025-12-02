@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tracer Study | Pendidikan Komputer</title>
-  <link rel="icon" href="https://ulm.ac.id/id/wp-content/uploads/2021/10/cropped-lambangULM2021warna-32x32.png" sizes="32x32" />
-  <link rel="icon" href="https://ulm.ac.id/id/wp-content/uploads/2021/10/cropped-lambangULM2021warna-192x192.png" sizes="192x192" />
-  <link rel="apple-touch-icon" href="https://ulm.ac.id/id/wp-content/uploads/2021/10/cropped-lambangULM2021warna-180x180.png" />
+  <link rel="icon" href="https://simari.ulm.ac.id/logo/ulm.png" sizes="32x32" />
+  <link rel="icon" href="https://simari.ulm.ac.id/logo/ulm.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="https://simari.ulm.ac.id/logo/ulm.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

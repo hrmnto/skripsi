@@ -1,14 +1,9 @@
 @extends("adminDash.layouts.main")
 
 @section("container")
-<style>
-  .container.mx-4.my-4 {
-    background-color: #ffffff;
-  }
-</style>
 
 @if (session()->has('success'))
-<div class="mx-4 my-4 alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show" role="alert">
   {{session('success')}}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -17,9 +12,10 @@
   <h1 class="h2">Selamat Datang {{auth()->user()->name}}</h1>
 </div>
 
-<h1 class="h2 text-primary">Tabel User</h1>
-<div class="container mx-4 my-4 p-3 shadow rounded">
-  <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+<h1 class="h2 text-primary mb-3">Tabel User</h1>
+<div class="card shadow mb-4">
+  <div class="card-body">
+    <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
     <div class="">
 
 
@@ -67,7 +63,7 @@
   </div>
 
 
-  <table class="table table-hover">
+  <table class="table table-hover datatable">
     <thead>
       <tr>
         <th scope="col">No. </th>
@@ -77,7 +73,7 @@
         <th scope="col">Aksi</th>
       </tr>
     </thead>
-    <tbody class="shadow rounded">
+    <tbody>
       @foreach ($users as $user)
 
       <tr>
@@ -101,6 +97,7 @@
 
     </tbody>
   </table>
+</div>
 </div>
 
 

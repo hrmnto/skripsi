@@ -16,8 +16,13 @@
 </div>
 @endif
 
-@if (count($biodatas) < 1) <div class="col-sm-4 bg-light p-4 rounded mt-5">
-    <h5>Anda belum mengisi biodata, silahkan <a href="/alumni/bios/create">isi biodata</a></h5>
+@if (count($biodatas) < 1) 
+    <div class="col-sm-4 mt-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5>Anda belum mengisi biodata, silahkan <a href="/alumni/bios/create">isi biodata</a></h5>
+            </div>
+        </div>
     </div>
     @else
 
@@ -25,7 +30,9 @@
     @foreach ($biodatas as $biodata)
     <div class="row">
 
-        <div class="col-sm-4 bg-light p-4 rounded mt-5">
+        <div class="col-sm-4 mt-5">
+            <div class="card shadow h-100">
+                <div class="card-body">
 
             <!-- <label class="text-secondary" for="">Nama</label> -->
             @if($biodata->foto)
@@ -34,9 +41,13 @@
             @else
             <img src="/img/noImage.png" class="img-thumbnail" alt="...">
             @endif
+                </div>
+            </div>
         </div>
 
-        <div class="col-sm-6 bg-light p-4 rounded mt-5">
+        <div class="col-sm-6 mt-5">
+            <div class="card shadow h-100">
+                <div class="card-body">
 
             <label class="text-secondary" for="">Nama</label>
             <h6 class="fw-bold">{{$biodata->name}}</h6>
@@ -98,6 +109,8 @@
 
 
         </div>
+    </div>
+</div>
     </div>
     @endforeach
 

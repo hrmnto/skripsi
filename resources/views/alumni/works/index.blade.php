@@ -10,8 +10,12 @@ use Carbon\Carbon;
 {{-- $work->biodata->name --}}
 @if (count($biodata) != 0)
 @if($biodata[0]['pekerjaan'] == "belum")
-<div class="col-sm-4 bg-light p-4 rounded mt-5">
-    <h5>Anda tidak bisa mengisi data pekerjaan karena status anda belum bekerja</h5>
+<div class="col-sm-4 mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h5>Anda tidak bisa mengisi data pekerjaan karena status anda belum bekerja</h5>
+        </div>
+    </div>
 </div>
 @else
 
@@ -35,7 +39,9 @@ use Carbon\Carbon;
 
     <div class="tab-pane fade {{$loop->iteration == count($pekerjaan)? 'show active':''}} " id="pekerjaan{{$loop->iteration}}-tab-pane" role="tabpanel" aria-labelledby="pekerjaan{{$loop->iteration }}-tab" tabindex="0">
 
-        <div class="col-sm-4 bg-light p-4 rounded">
+        <div class="col-sm-4 mt-3">
+            <div class="card shadow h-100">
+                <div class="card-body">
             <label class="text-secondary" for="">Nama</label>
             <h6 class="fw-bold">{{$work->biodata->name}}</h6>
 
@@ -105,19 +111,29 @@ use Carbon\Carbon;
             </h6>
             </form>
         </div>
+    </div>
+</div>
 
     </div>
     @endforeach
 </div>
 @else
-<div class="col-sm-4 bg-light p-4 rounded mt-5">
-    <h5>Anda belum mengisi data pekerjaan, silahkan <a href="/alumni/works/create">isi data pekerjaan</a></h5>
+<div class="col-sm-4 mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h5>Anda belum mengisi data pekerjaan, silahkan <a href="/alumni/works/create">isi data pekerjaan</a></h5>
+        </div>
+    </div>
 </div>
 @endif
 @endif
 @else
-<div class="col-sm-4 bg-light p-4 rounded mt-5">
-    <h5>Anda belum mengisi Biodata, silahkan <a href="/alumni/bios/create">isi biodata</a></h5>
+<div class="col-sm-4 mt-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <h5>Anda belum mengisi Biodata, silahkan <a href="/alumni/bios/create">isi biodata</a></h5>
+        </div>
+    </div>
 </div>
 @endif
 
