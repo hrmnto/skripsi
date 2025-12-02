@@ -93,103 +93,25 @@ class LaporanControllerPDF extends Controller
 
                 $tahunMasuk = explode('-', $biodata->tglMasuk);
                 $tahunMasuk = $tahunMasuk[0];
-                if ($tahunMasuk == 2016) {
-                    if ($tahunLulus == 2020) {
-                        $alumniAngkatan2016[0] += 1;
-                    } else if ($tahunLulus == 2021) {
-                        $alumniAngkatan2016[1] += 1;
-                    } else if ($tahunLulus == 2022) {
-                        $alumniAngkatan2016[2] += 1;
-                    } else if ($tahunLulus == 2023) {
-                        $alumniAngkatan2016[3] += 1;
-                    } else if ($tahunLulus == 2024) {
-                        $alumniAngkatan2016[4] += 1;
-                    } else if ($tahunLulus == 2025) {
-                        $alumniAngkatan2016[5] += 1;
-                    }
-                } else if ($tahunMasuk == 2017) {
-                    if ($tahunLulus == 2021) {
-                        $alumniAngkatan2017[0] += 1;
-                    } else if ($tahunLulus == 2021) {
-                        $alumniAngkatan2017[1] += 1;
-                    } else if ($tahunLulus == 2022) {
-                        $alumniAngkatan2017[2] += 1;
-                    } else if ($tahunLulus == 2023) {
-                        $alumniAngkatan2017[3] += 1;
-                    } else if ($tahunLulus == 2024) {
-                        $alumniAngkatan2017[4] += 1;
-                    } else if ($tahunLulus == 2025) {
-                        $alumniAngkatan2017[5] += 1;
-                    }
-                } else if ($tahunMasuk == 2018) {
-                    if ($tahunLulus == 2021) {
-                        $alumniAngkatan2018[0] += 1;
-                    } else if ($tahunLulus == 2021) {
-                        $alumniAngkatan2018[1] += 1;
-                    } else if ($tahunLulus == 2022) {
-                        $alumniAngkatan2018[2] += 1;
-                    } else if ($tahunLulus == 2023) {
-                        $alumniAngkatan2018[3] += 1;
-                    } else if ($tahunLulus == 2024) {
-                        $alumniAngkatan2018[4] += 1;
-                    } else if ($tahunLulus == 2025) {
-                        $alumniAngkatan2018[5] += 1;
-                    }
-                } else if ($tahunMasuk == 2019) {
-                    if ($tahunLulus == 2021) {
-                        $alumniAngkatan2019[0] += 1;
-                    } else if ($tahunLulus == 2021) {
-                        $alumniAngkatan2019[1] += 1;
-                    } else if ($tahunLulus == 2022) {
-                        $alumniAngkatan2019[2] += 1;
-                    } else if ($tahunLulus == 2023) {
-                        $alumniAngkatan2019[3] += 1;
-                    } else if ($tahunLulus == 2024) {
-                        $alumniAngkatan2019[4] += 1;
-                    } else if ($tahunLulus == 2025) {
-                        $alumniAngkatan2019[5] += 1;
-                    }
-                } else if ($tahunMasuk == 2020) {
-                    if ($tahunLulus == 2021) {
-                        $alumniAngkatan2020[0] += 1;
-                    } else if ($tahunLulus == 2021) {
-                        $alumniAngkatan2020[1] += 1;
-                    } else if ($tahunLulus == 2022) {
-                        $alumniAngkatan2020[2] += 1;
-                    } else if ($tahunLulus == 2023) {
-                        $alumniAngkatan2020[3] += 1;
-                    } else if ($tahunLulus == 2024) {
-                        $alumniAngkatan2020[4] += 1;
-                    } else if ($tahunLulus == 2025) {
-                        $alumniAngkatan2020[5] += 1;
-                    }
-                } else if ($tahunMasuk == 2021) {
-                    if ($tahunLulus == 2021) {
-                        $alumniAngkatan2021[0] += 1;
-                    } else if ($tahunLulus == 2021) {
-                        $alumniAngkatan2021[1] += 1;
-                    } else if ($tahunLulus == 2022) {
-                        $alumniAngkatan2021[2] += 1;
-                    } else if ($tahunLulus == 2023) {
-                        $alumniAngkatan2021[3] += 1;
-                    } else if ($tahunLulus == 2024) {
-                        $alumniAngkatan2021[4] += 1;
-                    } else if ($tahunLulus == 2025) {
-                        $alumniAngkatan2021[5] += 1;
-                    }
-                } else if ($tahunMasuk == 2022) {
-                    if ($tahunLulus == 2021) {
-                        $alumniAngkatan2022[0] += 1;
-                    } else if ($tahunLulus == 2021) {
-                        $alumniAngkatan2022[1] += 1;
-                    } else if ($tahunLulus == 2022) {
-                        $alumniAngkatan2022[2] += 1;
-                    } else if ($tahunLulus == 2023) {
-                        $alumniAngkatan2022[3] += 1;
-                    } else if ($tahunLulus == 2024) {
-                        $alumniAngkatan2022[4] += 1;
-                    } else if ($tahunLulus == 2025) {
-                        $alumniAngkatan2022[5] += 1;
+
+                // Map graduation year to index: 2020->0, 2021->1, ..., 2025->5
+                $idx = $tahunLulus - 2020;
+
+                if ($idx >= 0 && $idx <= 7) {
+                    if ($tahunMasuk == 2016) {
+                        $alumniAngkatan2016[$idx] += 1;
+                    } else if ($tahunMasuk == 2017) {
+                        $alumniAngkatan2017[$idx] += 1;
+                    } else if ($tahunMasuk == 2018) {
+                        $alumniAngkatan2018[$idx] += 1;
+                    } else if ($tahunMasuk == 2019) {
+                        $alumniAngkatan2019[$idx] += 1;
+                    } else if ($tahunMasuk == 2020) {
+                        $alumniAngkatan2020[$idx] += 1;
+                    } else if ($tahunMasuk == 2021) {
+                        $alumniAngkatan2021[$idx] += 1;
+                    } else if ($tahunMasuk == 2022) {
+                        $alumniAngkatan2022[$idx] += 1;
                     }
                 }
             }
