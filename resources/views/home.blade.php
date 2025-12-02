@@ -449,13 +449,13 @@
           [
             
             { label: 'Kependidikan', values: [@foreach ($datas['kategoriPekerjaan1'] as $a)
-              {{$a}},
+              "{{$a}}",
             @endforeach ]},
             { label: 'IT', values: [@foreach ($datas['kategoriPekerjaan2'] as $a)
-              {{$a}},
+              "{{$a}}",
             @endforeach ]},
             { label: 'Wirausaha', values: [@foreach ($datas['kategoriPekerjaan3'] as $a)
-              {{$a}},
+              "{{$a}}",
             @endforeach ]},
           ],
           {
