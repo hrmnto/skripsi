@@ -52,13 +52,11 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary btn-user btn-block w-100">
-                                Daftar Akun
+                                Register Akun
                             </button>
                         </form>
                         <hr>
-                        <div class="text-center">
-                            <a class="small" href="/login">Sudah punya akun? Login!</a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
