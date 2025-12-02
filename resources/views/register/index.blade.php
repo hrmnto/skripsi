@@ -1,68 +1,68 @@
 @extends("layouts.main")
 @section("container")
 
-<style>
-    .container-regist{
-        background-image: url('/img/SAM_2141.JPG');
-        background-attachment: fixed;
-        background-size: cover;
-    }
-    .form-regist{
-        background-color: #000000ad;
-    }
-</style>
-<div class="row align-items-center container-regist" style="height: 100vh">
-    <div class="col-sm-3 m-auto form-regist p-4 rounded">
-        <h3 class="text-center text-white">From Registrasi</h3>
-        <form action="/register" method="post">
-            @csrf
-            <div class="form-floating mb-3">
-                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="floatingInput" placeholder="Nama" value="{{old('name')}}">
-                <label for="floatingInput">Masukkan Nama</label>
-                @error('name')
-                    <div class="invalid-feedback">  
-                        {{$message}}
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image" style="background: url('/img/alumni.png'); background-position: center; background-size: contain; background-repeat: no-repeat; min-height: 400px;"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Buat Akun Baru!</h1>
+                        </div>
+                        <form class="user" action="/register" method="post">
+                            @csrf
+                            <div class="form-group mb-3">
+                                <input type="text" name="name" class="form-control form-control-user @error('name') is-invalid @enderror" id="exampleFirstName"
+                                    placeholder="Nama Lengkap" value="{{old('name')}}">
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="text" name="nim" class="form-control form-control-user @error('nim') is-invalid @enderror" id="exampleInputNim"
+                                    placeholder="Nomor Induk Mahasiswa (NIM)" value="{{old('nim')}}">
+                                @error('nim')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="exampleInputEmail"
+                                    placeholder="Alamat Email" value="{{old('email')}}">
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror"
+                                    id="exampleInputPassword" placeholder="Password">
+                                @error('password')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-user btn-block w-100">
+                                Register Akun
+                            </button>
+                        </form>
+                        <hr>
+                        
                     </div>
-                @enderror
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" name="nim" class="form-control @error('nim')
-                    is-invalid
-                @enderror" id="floatingInput" placeholder="2110131310001" value="{{old('nim')}}">
-                <label for="floatingInput">Masukkan NIM</label>
-                @error('nim')
-                    <div class="invalid-feedback">  
-                        {{$message}}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-floating mb-3">
-                <input type="email" name="email" class="form-control @error('email')
-                    is-invalid
-                @enderror" id="floatingInput" placeholder="name@example.com" value="{{old('email')}}">
-                <label for="floatingInput">Masukkan Email</label>
-                @error('email')
-                    <div class="invalid-feedback">  
-                        {{$message}}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-floating">
-                <input type="password" name="password" class="form-control @error('password')
-                    is-invalid
-                @enderror" id="floatingPassword" placeholder="Password" >
-                <label for="floatingPassword">Password</label>
-                @error('password')
-                    <div class="invalid-feedback">  
-                        {{$message}}
-                    </div>
-                @enderror
-            </div>
-            <div>
-                <button type="submit" name="register" class="btn btn-primary mt-3">Register</button>
+                </div>
             </div>
         </div>
-    </form>
+    </div>
+
 </div>
 
 @endsection

@@ -40,6 +40,12 @@ class AlumniController extends Controller
     public function store(Request $request)
     {
         // return $request->file('foto')->store('img');
+        $messages = [
+            'required' => ':attribute wajib diisi.',
+            'image' => ':attribute harus berupa gambar.',
+            'file' => ':attribute harus berupa file.',
+        ];
+
         $validatedData = $request->validate([
             'nim' => 'required',
             'name' => 'required',
@@ -62,7 +68,7 @@ class AlumniController extends Controller
             'noIjazah' => 'required',
             'fotoIjazah' => 'image|file',
             'koordinat' => 'required'
-        ]);
+        ], $messages);
 
         $kelurahan = Village::where('id', $validatedData['kelurahan'])->first()->name;
         $kecamatan = District::where('id', $validatedData['kecamatan'])->first()->name;
@@ -115,6 +121,11 @@ class AlumniController extends Controller
      */
     public function update(Request $request, $nim)
     {
+        $messages = [
+            'required' => ':attribute wajib diisi.',
+            'image' => ':attribute harus berupa gambar.',
+            'file' => ':attribute harus berupa file.',
+        ];
 
         $validatedData = $request->validate([
             'nim' => 'required',
@@ -138,7 +149,7 @@ class AlumniController extends Controller
             'noIjazah' => 'required',
             'fotoIjazah' => 'image|file',
             'koordinat' => 'required'
-        ]);
+        ], $messages);
 
         $kelurahan = Village::where('id', $validatedData['kelurahan'])->first()->name;
         $kecamatan = District::where('id', $validatedData['kecamatan'])->first()->name;
@@ -162,7 +173,7 @@ class AlumniController extends Controller
 
 
         Biodata::where('nim', $nim)->update($validatedData);
-        $request->session()->flash('success', 'Biodata Berhasil Diubah"');
+        $request->session()->flash('success', 'Biodata Berhasil Diubah');
         return redirect('/alumni/bios');
     }
 

@@ -369,7 +369,9 @@ Route::get('/register', [RegisterController::class, "index"])->middleware("auth"
 Route::post('/register', [RegisterController::class, "store"]);
 
 Route::get('/alumni', function () {
-    return view('alumni.index');
+    $biodata = Biodata::where('nim', auth()->user()->nim)->first();
+    $pekerjaanCount = Pekerjaan::where('nim', auth()->user()->nim)->count();
+    return view('alumni.index', compact('biodata', 'pekerjaanCount'));
 });
 
 Route::resource('/alumni/bios', AlumniController::class)->middleware("auth");

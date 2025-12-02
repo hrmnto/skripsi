@@ -1,331 +1,279 @@
-
 @extends("layouts.main")
-<style>
 
-    span{
-        color: #eca457;
-    }
-    nav{
-        transition: 0.2s;
-    }
-
-    .container-home{
-      background-image: url('/img/SAM_2141.JPG');
-      background-attachment: fixed;
-      background-position: center;
-      background-size: cover;
-    }
-
-    .welcome{
-      /* background-color: rgba(0, 0, 0, 0.329); */
-      padding: 20px;
-    }
-
-    body{
-      background-image: url('/img/playstation-pattern.webp');
-    }
-
-    #map {
-      height: 83vh; 
-    }
-    .label-kecamatan{
-        color: black;
-        /* text-shadow: 1px 1px white; */
-        text-align: center;
-        font-weight: bold;
-    }
-    .legend {
-        padding: 6px 8px;
-        font: 14px Arial, Helvetica, sans-serif;
-        background: white;
-        background: rgba(255, 255, 255, 0.8);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        width: 300px;
-        border-radius: 5px;
-        line-height: 24px;
-        color: #555;
-        }
-        .legend h4 {
-        text-align: center;
-        font-size: 16px;
-        margin: 2px 12px 8px;
-        color: #777;
-        }
-
-        .legend div {
-            display: flex;
-            align-items: center
-        }
-        .legend span {
-        position: relative;
-        bottom: 3px;
-        color: black
-        }
-
-        .legend i {
-        width: 18px;
-        height: 18px;
-        float: left;
-        margin: 0 8px 0 0;
-        opacity: 0.7;
-        }
-
-        .legend i.icon {
-        background-size: 18px;
-        background-color: rgba(255, 255, 255, 1);
-        }
-
-</style>
-
-  
 @section("container")
-
-<div id="particles- js"></div>
-  <div class="container-fluid px-5">
-        <div class="row justify-content-center align-items-center" style="height: 100vh" id="about">
-            <div class="col-sm-12">
-                {{-- <h2 class="fw-bold">Persebaran Alumni</h2> --}}
-                <div id="map"></div>
-          </div>
+<div class="container-fluid pb-4 pt-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 fw-bold text-primary"><i class="bi bi-geo-alt-fill me-2"></i>Persebaran Alumni</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div id="map" style="height: 85vh; width: 100%;"></div>
+                </div>
+            </div>
         </div>
-      </div>
-      
-
-<!-- Modal -->
-<div class="modal fade" id="alumniDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detail Alumni</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h2 class="fs-6">Nama Alumni :</h2>  <span id="nama"></span> <br>
-        <h2 class="fs-6">NIM :</h2><span id="nim"></span> <br>
-        <h2 class="fs-6">Jenis Kelamin : </h2> <span id="jk"></span> <br>
-        <h2 class="fs-6">Riwayat Pekerjaan : </h2> 
-        <ul id="riwayat-pekerjaan"></ul> <!-- Tambahkan elemen ini -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
     </div>
-  </div>
 </div>
 
-
-      <script>
-
-                 // basemap
-            var map = L.map('map').setView([-3.298618801108944,114.58542404981114], 13.46);
-      
-            var ulmIcon = L.icon({
-            iconUrl: "/img/Logo_ULM.png",
-            iconSize:     [50, 50], // size of the icon
-            // iconAnchor:   [24, 24], // point of the icon which will correspond to marker's location
-            // shadowAnchor: [4, 62],  // the same for the shadow
-            // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-
-            var manIcon = L.icon({
-            iconUrl: "/img/icon_man.png",
-            iconSize:     [50, 50],
-            });
-
-            var ceweIcon = L.icon({
-            iconUrl: "/img/icon_cewe.png",
-            iconSize:     [70, 70],
-            });
-
-            var cowoIcon = L.icon({
-            iconUrl: "/img/icon_cowo.png",
-            iconSize:     [70, 70],
-            });
-
-        //     L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
-        // maxZoom: 20,
-        // subdomains:['mt0','mt1','mt2','mt3']
-
-        //     }).addTo(map);
-
-            var baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                  attribution: '© OpenStreetMap contributors',
-              })
-              baseLayer.addTo(map);
-
-            //   var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-            
-
-
-              var marker = L.marker([-3.298618801108944,114.58542404981114],{icon:ulmIcon}).addTo(map);
-              marker.bindPopup('FKIP ULM').openPopup();
-
-
-            @foreach ($biodatas as $biodata)
-            @php
-                $koordinats = explode(",", $biodata["koordinat"]);
-                $riwayatPekerjaan = $biodata->works->map(function($work) {
-            return [
-                'nama_pekerjaan' => $work->nama_pekerjaan,
-                'tempat_pekerjaan' => $work->tempat_pekerjaan,
-                'tanggal_pekerjaan' => $work->tanggal_pekerjaan,
-                'gaji' => $work->gaji,
-                'relevansi_pekerjaan' => $work->relevansi_pekerjaan,
-                'latitude' => explode(',', $work->koordinat)[0], // Ambil latitude dari koordinat
-                'longitude' => explode(',', $work->koordinat)[1], // Ambil longitude dari koordinat
-            ];
-        });
-        $riwayatPekerjaanJSON = json_encode($riwayatPekerjaan);
-            @endphp
-            
-      
-
-
-            var latitude = {{$koordinats[0]}},
-                longitude = {{$koordinats[1]}}
-                @if ($biodata["jk"] == "laki-laki")
-                    icon = cowoIcon
-                @else
-                    icon = ceweIcon
-                @endif
-                L.marker([latitude, longitude ], {icon:icon})
-                .addTo(map)
-                .bindPopup(
-                    `Biodata Alumni <br><br>
-                     Nama : {{ e($biodata->name) }} <br>
-                     NIM  : {{ e($biodata->nim) }} <br><br>
-                    <img src="{{asset('storage/' . $biodata->foto) }}" class="img-thumbnail" alt="{{$biodata["name"]}}"><br><br>
-                    <button class="btn btn-sm btn-outline-success" onclick = 'return showRute(${latitude}, ${longitude})'> Rute kesini </button>
-                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="showDetailAlumni('{{$biodata["name"]}}', '{{$biodata["nim"]}}', '{{$biodata["jk"]}}', {{$riwayatPekerjaanJSON}})">Detail Alumni</button>
-                    `);
-                    
-            @endforeach
-
-            var control = L.Routing.control({
-                  waypoints: [
-                      L.latLng(-3.298618801108944,114.58542404981114)
-                  ],
-                  routeWhileDragging: false,
-                  lineOptions:{
-                    styles:[
-                        {color: 'red',weight:3}
-                    ],
-                  },
-                  createMarker: function() { return null; }
-              })
-              control.addTo(map);
-
-              function showRute(lat, lng){
-                var latLng = L.latLng(lat, lng);
-                control.spliceWaypoints(control.getWaypoints().length -1,1, latLng)
-              }
-
-            //   GeoJSON
-            let batasKecamatan = [];
-            let sub = [];
-            let colors = ["#32b8a6", "#f5cb11", "#eb7200", "#c461eb", "#6c7000", "#bf2e2e", "#46e39c", "#9fd40c", "#ad00f2", "#fffb00", "#7ff2fa", "#e8a784"];
-            
-            var kabupaten = []
-            var listKabupaten = []
-           var html = ``;
-
-           getShape("kabBanjarmasin", "Banjarmasin");
-           getShape("kabTapin", "Tapin");
-           getShape("kabBanjarbaru", "Banjarbaru");
-           getShape("kabBanjar", "Banjar");
-           getShape("kabBaritoKuala", "BaritoKuala");
-           getShape("kabHuluSungaiSelatan", "HuluSungaiSelatan");
-           getShape("kabHuluSungaiTengah", "HuluSungaiTengah");
-           getShape("kabHuluSungaiUtara", "HuluSungaiUtara");
-           getShape("kabBalangan", "Balangan");
-           getShape("kabTabalong", "Tabalong");
-           getShape("kabTanahLaut", "TanahLaut");
-           getShape("kabTanahBumbu", "TanahBumbu");
-           getShape("kabKotabaru", "Kotabaru");
-
-            function getShape(namaFile, kab){
-
-                $.getJSON('/geoJSON/'+namaFile+'.geojson', (json) =>{
-                    html = html + `
-                                <label for="${kab}" style="cursor:pointer;" class="fs-6"><b> Kabupaten ${kab} <span id="label${kab}" class="fa fa-chevron-left"></span></b></label>
-                                <input id="${kab}" style="transform:scale(0)"  type="checkbox"  onclick="showKecamatan(this, ${batasKecamatan.length})">
-                                <br>
-                        `;
-                        let i = 0;
-                        let j = 1;
-                    geoLayer = L.geoJSON(json, {
-                        
-                        style: (feature) => {
-                            return {
-                                fillOpacity: 0.8,
-                                weight: 3,
-                                opacity: 1,
-                                color: 'purple',
-                                fillColor: colors[i]
-                                };
-                            },
-                            onEachFeature: (feature, layer)=>{
-                                var iconLabel = L.divIcon({
-                                    className: 'label-kecamatan',
-                                    html: `${feature.properties.WADMKC}`
-
-                                });
-                                
-                            // if(feature.properties.WADMKC){
-
-                                html = html + `
-                                <div class="${kab}" style="display:none">
-                                <input id="${sub.length}" type="checkbox" class="kec" onclick="showBatas(this, ${sub.length})">  <label class="text-capitalize" for="${sub.length}">${feature.properties.WADMKC}</label> <br>
-                            </div>
-                            `;
-                            
-           
-                            sub.push(L.markerClusterGroup().addLayer(layer) ) ;
-                            L.marker(layer.getBounds().getCenter(), {icon:iconLabel}).addTo(sub[batasKecamatan.length]);
-                            
-                            // batasKecamatan.addLayer(sub[i]);
-                            //  sub[i].addTo(batasKecamatan);
-                            // batasKecamatan.addLayer(layer);
-                            batasKecamatan.push(L.markerClusterGroup().addLayer(sub[batasKecamatan.length]) ) ;
-                            i++;
-                        // }
-                            
-                        }
-                    })
-                    // console.log(batasKecamatan.length)
-                    for(let i = 0; i < batasKecamatan.length; i++){
-                        kabupaten.push(L.markerClusterGroup().addLayer(batasKecamatan[i]))
-                    }
-                    control2.setContents(html);
-                })
-            }
-                var control2 = L.control.slideMenu("", {
-                    position: "topleft",
-                    menuposition: "topleft",
-
-                    }).addTo(map);
+<!-- Modal Detail Alumni -->
+<div class="modal fade" id="alumniDetail" tabindex="-1" aria-labelledby="alumniDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold" id="alumniDetailLabel">Detail Alumni</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <h4 class="fw-bold mb-1" id="nama"></h4>
+                        <p class="text-muted mb-2"><i class="bi bi-card-heading me-2"></i><span id="nim"></span></p>
+                        <span class="badge bg-info text-dark" id="jk"></span>
+                    </div>
+                </div>
                 
-                    var legend = L.control({ position: "bottomright" });
+                <h5 class="fw-bold border-bottom pb-2 mb-3">Riwayat Pekerjaan</h5>
+                <div id="riwayat-pekerjaan" class="list-group list-group-flush">
+                    <!-- Content injected via JS -->
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                        legend.onAdd = function(map) {
-                        var div = L.DomUtil.create("div", "legend");
+<style>
+    .label-kecamatan{
+        color: #333;
+        text-align: center;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    }
+    .legend {
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        line-height: 24px;
+        color: #555;
+    }
+    .legend h5 {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        margin-top: 0;
+    }
+    .legend div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    .legend span {
+        margin-left: 8px;
+        font-size: 14px;
+    }
+</style>
 
-                        div.innerHTML += "<h5>Keterangan : </h5>";
-                        div.innerHTML += '<div><img src="/img/Logo_ULM.png" width="35"><span> : FKIP ULM</span></div>';
-                        div.innerHTML += '<div><img src="/img/icon_cowo.png" width="35"><span> : Alumni (Laki-laki)</span></div>';
-                        div.innerHTML += '<div><img src="/img/icon_cewe.png" width="35"><span> : Alumni (Perempuan)</span></div>';
-                        div.innerHTML += '<div><i style="height:5px ;background:purple;"></i><span> : Batas Kecamatan</span></div>';
-                        div.innerHTML += '<div><i style="height:5px ;background:red;"></i><span> : Rute </span></div>';
-                        
-                        
+<script>
+    // basemap
+    var map = L.map('map').setView([-3.298618801108944,114.58542404981114], 13.46);
 
-                        return div;
+    var ulmIcon = L.icon({
+    iconUrl: "/img/Logo_ULM.png",
+    iconSize:     [50, 50], 
+    });
+
+    var manIcon = L.icon({
+    iconUrl: "/img/icon_man.png",
+    iconSize:     [50, 50],
+    });
+
+    var ceweIcon = L.icon({
+    iconUrl: "/img/icon_cewe.png",
+    iconSize:     [70, 70],
+    });
+
+    var cowoIcon = L.icon({
+    iconUrl: "/img/icon_cowo.png",
+    iconSize:     [70, 70],
+    });
+
+    var baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+        })
+        baseLayer.addTo(map);
+
+    var marker = L.marker([-3.298618801108944,114.58542404981114],{icon:ulmIcon}).addTo(map);
+    marker.bindPopup('FKIP ULM').openPopup();
+
+
+    @foreach ($biodatas as $biodata)
+    @php
+        $koordinats = explode(",", $biodata["koordinat"]);
+        $riwayatPekerjaan = $biodata->works->map(function($work) {
+    return [
+        'nama_pekerjaan' => $work->nama_pekerjaan,
+        'tempat_pekerjaan' => $work->tempat_pekerjaan,
+        'tanggal_pekerjaan' => $work->tanggal_pekerjaan,
+        'gaji' => $work->gaji,
+        'relevansi_pekerjaan' => $work->relevansi_pekerjaan,
+        'latitude' => explode(',', $work->koordinat)[0], 
+        'longitude' => explode(',', $work->koordinat)[1], 
+    ];
+    });
+    $riwayatPekerjaanJSON = json_encode($riwayatPekerjaan);
+    @endphp
+    
+
+
+    var latitude = {{$koordinats[0]}},
+        longitude = {{$koordinats[1]}}
+        @if ($biodata["jk"] == "laki-laki")
+            icon = cowoIcon
+        @else
+            icon = ceweIcon
+        @endif
+        L.marker([latitude, longitude ], {icon:icon})
+        .addTo(map)
+        .bindPopup(
+            `Biodata Alumni <br><br>
+                Nama : {{ e($biodata->name) }} <br>
+                NIM  : {{ e($biodata->nim) }} <br><br>
+            <img src="{{asset('storage/' . $biodata->foto) }}" class="img-thumbnail" alt="{{$biodata["name"]}}"><br><br>
+            <button class="btn btn-sm btn-outline-success" onclick = 'return showRute(${latitude}, ${longitude})'> Rute kesini </button>
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="showDetailAlumni('{{$biodata["name"]}}', '{{$biodata["nim"]}}', '{{$biodata["jk"]}}', {{$riwayatPekerjaanJSON}})">Detail Alumni</button>
+            `);
+            
+    @endforeach
+
+    var control = L.Routing.control({
+            waypoints: [
+                L.latLng(-3.298618801108944,114.58542404981114)
+            ],
+            routeWhileDragging: false,
+            lineOptions:{
+            styles:[
+                {color: 'red',weight:3}
+            ],
+            },
+            createMarker: function() { return null; }
+        })
+        control.addTo(map);
+
+        function showRute(lat, lng){
+        var latLng = L.latLng(lat, lng);
+        control.spliceWaypoints(control.getWaypoints().length -1,1, latLng)
+        }
+
+    //   GeoJSON
+    let batasKecamatan = [];
+    let sub = [];
+    let colors = ["#32b8a6", "#f5cb11", "#eb7200", "#c461eb", "#6c7000", "#bf2e2e", "#46e39c", "#9fd40c", "#ad00f2", "#fffb00", "#7ff2fa", "#e8a784"];
+    
+    var kabupaten = []
+    var listKabupaten = []
+    var html = ``;
+
+    getShape("kabBanjarmasin", "Banjarmasin");
+    getShape("kabTapin", "Tapin");
+    getShape("kabBanjarbaru", "Banjarbaru");
+    getShape("kabBanjar", "Banjar");
+    getShape("kabBaritoKuala", "BaritoKuala");
+    getShape("kabHuluSungaiSelatan", "HuluSungaiSelatan");
+    getShape("kabHuluSungaiTengah", "HuluSungaiTengah");
+    getShape("kabHuluSungaiUtara", "HuluSungaiUtara");
+    getShape("kabBalangan", "Balangan");
+    getShape("kabTabalong", "Tabalong");
+    getShape("kabTanahLaut", "TanahLaut");
+    getShape("kabTanahBumbu", "TanahBumbu");
+    getShape("kabKotabaru", "Kotabaru");
+
+    function getShape(namaFile, kab){
+
+        $.getJSON('/geoJSON/'+namaFile+'.geojson', (json) =>{
+            html = html + `
+                        <label for="${kab}" style="cursor:pointer;" class="fs-6"><b> Kabupaten ${kab} <span id="label${kab}" class="fa fa-chevron-left"></span></b></label>
+                        <input id="${kab}" style="transform:scale(0)"  type="checkbox"  onclick="showKecamatan(this, ${batasKecamatan.length})">
+                        <br>
+                `;
+                let i = 0;
+                let j = 1;
+            geoLayer = L.geoJSON(json, {
+                
+                style: (feature) => {
+                    return {
+                        fillOpacity: 0.8,
+                        weight: 3,
+                        opacity: 1,
+                        color: 'purple',
+                        fillColor: colors[i]
                         };
+                    },
+                    onEachFeature: (feature, layer)=>{
+                        var iconLabel = L.divIcon({
+                            className: 'label-kecamatan',
+                            html: `${feature.properties.WADMKC}`
 
-                        legend.addTo(map);
+                        });
+                        
+                    // if(feature.properties.WADMKC){
 
-                // L.control.slideMenu(html).addTo(map);
-          
+                        html = html + `
+                        <div class="${kab}" style="display:none">
+                        <input id="${sub.length}" type="checkbox" class="kec" onclick="showBatas(this, ${sub.length})">  <label class="text-capitalize" for="${sub.length}">${feature.properties.WADMKC}</label> <br>
+                    </div>
+                    `;
+                    
+    
+                    sub.push(L.markerClusterGroup().addLayer(layer) ) ;
+                    L.marker(layer.getBounds().getCenter(), {icon:iconLabel}).addTo(sub[batasKecamatan.length]);
+                    
+                    // batasKecamatan.addLayer(sub[i]);
+                    //  sub[i].addTo(batasKecamatan);
+                    // batasKecamatan.addLayer(layer);
+                    batasKecamatan.push(L.markerClusterGroup().addLayer(sub[batasKecamatan.length]) ) ;
+                    i++;
+                // }
+                    
+                }
+            })
+            // console.log(batasKecamatan.length)
+            for(let i = 0; i < batasKecamatan.length; i++){
+                kabupaten.push(L.markerClusterGroup().addLayer(batasKecamatan[i]))
+            }
+            control2.setContents(html);
+        })
+    }
+        var control2 = L.control.slideMenu("", {
+            position: "topleft",
+            menuposition: "topleft",
+
+            }).addTo(map);
+        
+            var legend = L.control({ position: "bottomright" });
+
+                legend.onAdd = function(map) {
+                var div = L.DomUtil.create("div", "legend");
+
+                div.innerHTML += "<h5>Keterangan : </h5>";
+                div.innerHTML += '<div><img src="/img/Logo_ULM.png" width="35"><span> : FKIP ULM</span></div>';
+                div.innerHTML += '<div><img src="/img/icon_cowo.png" width="35"><span> : Alumni (Laki-laki)</span></div>';
+                div.innerHTML += '<div><img src="/img/icon_cewe.png" width="35"><span> : Alumni (Perempuan)</span></div>';
+                div.innerHTML += '<div><i style="height:5px ;background:purple;"></i><span> : Batas Kecamatan</span></div>';
+                div.innerHTML += '<div><i style="height:5px ;background:red;"></i><span> : Rute </span></div>';
+                
+                
+
+                return div;
+                };
+
+                legend.addTo(map);
+
+        // L.control.slideMenu(html).addTo(map);
+    
 function showBatas(v, i){
     if(v.checked === true){
         // map.removeLayer(batasKecamatan);
@@ -334,7 +282,7 @@ function showBatas(v, i){
         
     }else{
         map.removeLayer(sub[i]);
-       
+    
     }
 }
 
@@ -378,22 +326,29 @@ function showDetailAlumni(nama, nim, jk, riwayatPekerjaan) {
 
     if (Array.isArray(riwayatPekerjaan) && riwayatPekerjaan.length > 0) {
         riwayatPekerjaan.forEach(function(pekerjaan) {
-            var li = document.createElement('li');
-            li.innerHTML = `
-                <strong>Nama Pekerjaan:</strong> ${pekerjaan.nama_pekerjaan} <br>
-                <strong>Tempat Pekerjaan:</strong> ${pekerjaan.tempat_pekerjaan} <br>
-                <strong>Tanggal Pekerjaan:</strong> ${pekerjaan.tanggal_pekerjaan} <br>
-                <strong>Gaji:</strong> ${pekerjaan.gaji} <br>
-                <strong>Relevansi Pekerjaan:</strong> ${pekerjaan.relevansi_pekerjaan} <br>
-                <button class="btn btn-sm btn-outline-primary" onclick="showRute(${pekerjaan.latitude}, ${pekerjaan.longitude}); closeModal()">Rute ke Pekerjaan</button>
-                <hr>
+            var item = document.createElement('div');
+            item.className = 'list-group-item border-0 px-0 py-3';
+            item.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h6 class="fw-bold mb-1">${pekerjaan.nama_pekerjaan}</h6>
+                        <p class="mb-1 text-muted small"><i class="bi bi-building me-1"></i> ${pekerjaan.tempat_pekerjaan}</p>
+                        <p class="mb-1 text-muted small"><i class="bi bi-calendar-event me-1"></i> ${pekerjaan.tanggal_pekerjaan}</p>
+                    </div>
+                    <span class="badge bg-light text-dark border">${pekerjaan.relevansi_pekerjaan}</span>
+                </div>
+                <div class="mt-2">
+                     <span class="badge bg-success bg-opacity-10 text-success me-2">Gaji: ${pekerjaan.gaji}</span>
+                     <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 mt-md-0" onclick="showRute(${pekerjaan.latitude}, ${pekerjaan.longitude}); closeModal()"><i class="bi bi-cursor-fill me-1"></i> Rute</button>
+                </div>
             `;
-            riwayatPekerjaanList.appendChild(li);
+            riwayatPekerjaanList.appendChild(item);
         });
     } else {
-        var li = document.createElement('li');
-        li.innerText = 'Tidak ada data riwayat pekerjaan';
-        riwayatPekerjaanList.appendChild(li);
+        var item = document.createElement('div');
+        item.className = 'text-center py-4 text-muted';
+        item.innerHTML = '<i class="bi bi-briefcase-fill fs-1 d-block mb-2 opacity-25"></i> Belum ada data riwayat pekerjaan';
+        riwayatPekerjaanList.appendChild(item);
     }
 
     var modal = new bootstrap.Modal(document.getElementById('alumniDetail'), {});
@@ -405,8 +360,6 @@ function closeModal() {
     modal.hide();
 }
 
-      </script>
-<!-- After Leaflet script -->
-{{-- <script src="https://unpkg.com/leaflet.featuregroup.subgroup@1.0.2/dist/leaflet.featuregroup.subgroup.js"></script> --}}
+</script>
 @endsection
 

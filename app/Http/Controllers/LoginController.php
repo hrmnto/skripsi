@@ -14,10 +14,15 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
+        $messages = [
+            'required' => ':attribute wajib diisi.',
+            'email' => ':attribute harus berupa alamat email yang valid.',
+        ];
+
         $credentials = $request->validate([
             "email" => "required|email:dns",
             "password" => "required"
-        ]);
+        ], $messages);
 
         if ($credentials["email"] == 'admin@gmail.com') {
             if (Auth::attempt($credentials)) {

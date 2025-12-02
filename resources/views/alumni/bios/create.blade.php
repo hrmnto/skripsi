@@ -20,165 +20,237 @@ crossorigin=""/>
 
 
 
-<h1>Isi Biodata</h1>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Isi Biodata</h1>
+</div>
 
-<div class="col-sm-8 pb-5">
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Form Biodata Alumni</h6>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/alumni/bios" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
 
-    <form method="POST" action="/alumni/bios" enctype="multipart/form-data">
-        @csrf
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Nama</label>
-      <input type="name" class="form-control" id="exampleInputname1" aria-describedby="nameHelp" value="{{auth()->user()->name}} " name="name">
-    </div>
-    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-    <div class="mb-3">
-        <label for="foto" class="form-label">foto</label>
-        <input type="file" class="form-control" id="foto" name="foto" placeholder="foto">
-    </div>
-    <div class="mb-3">
-        <label for="nim" class="form-label">NIM</label>
-        <input type="text" class="form-control @error('nim')
-            is-invalid
-        @enderror" id="nim" name="nim" placeholder="NIM" value="{{auth()->user()->nim}}">
-    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Nama</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputname1" aria-describedby="nameHelp" value="{{auth()->user()->name}} " name="name">
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="nim" class="form-label">NIM</label>
+                                <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim" placeholder="NIM" value="{{auth()->user()->nim}}">
+                                @error('nim')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="mb-3">
-        <label for="kontak" class="form-label">Kontak</label>
-        <input type="number" class="form-control @error('kontak')
-        is-invalid
-    @enderror" id="kontak" name="kontak" placeholder="Contoh : 0822xxxxxxxx" >
-    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="foto" class="form-label">Foto Profil</label>
+                                <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto">
+                                @error('foto')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="kontak" class="form-label">Kontak (WA/HP)</label>
+                                <input type="number" class="form-control @error('kontak') is-invalid @enderror" id="kontak" name="kontak" placeholder="Contoh : 0822xxxxxxxx">
+                                @error('kontak')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="mb-3">
-        <label for="tglMasuk" class="form-label">Tanggal Masuk</label>
-        <input type="date" class="form-control @error('tglMasuk')
-        is-invalid
-    @enderror" id="tglMasuk" name="tglMasuk" placeholder="Contoh : 2015">
-    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="tglMasuk" class="form-label">Tanggal Masuk</label>
+                                <input type="date" class="form-control @error('tglMasuk') is-invalid @enderror" id="tglMasuk" name="tglMasuk">
+                                @error('tglMasuk')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="tglLulus" class="form-label">Tanggal Kelulusan</label>
+                                <input type="date" class="form-control @error('tglLulus') is-invalid @enderror" id="tglLulus" name="tglLulus">
+                                @error('tglLulus')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="mb-3">
-        <label for="tglLulus" class="form-label">Tanggal Kelulusan</label>
-        <input type="date" class="form-control @error('tglLulus')
-        is-invalid
-    @enderror" id="tglLulus" name="tglLulus" placeholder="Contoh : 2015">
-    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="noIjazah" class="form-label">Nomor Ijazah</label>
+                                <input type="text" class="form-control @error('noIjazah') is-invalid @enderror" id="noIjazah" name="noIjazah" placeholder="Nomor Ijazah">
+                                @error('noIjazah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="fotoIjazah" class="form-label">Scan Ijazah</label>
+                                <input type="file" class="form-control @error('fotoIjazah') is-invalid @enderror" id="fotoIjazah" name="fotoIjazah">
+                                @error('fotoIjazah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="mb-3">
-        <label for="noIjazah" class="form-label">Nomor Ijazah</label>
-        <input type="text" class="form-control @error('noIjazah')
-        is-invalid
-    @enderror" id="noIjazah" name="noIjazah" placeholder="Nomor Ijazah ">
-    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="ipk" class="form-label">IPK</label>
+                                <input type="text" class="form-control @error('ipk') is-invalid @enderror" id="ipk" name="ipk" placeholder="Contoh : 3.8">
+                                @error('ipk')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="thnLulus" class="form-label">Tempat, Tanggal Lahir</label>
+                                <div class="input-group">
+                                    <input type="text" aria-label="First name" class="form-control @error('tempatLahir') is-invalid @enderror" name="tempatLahir" placeholder="Tempat Lahir">
+                                    <input type="date" aria-label="Last name" class="form-control @error('tglLahir') is-invalid @enderror" name="tglLahir">
+                                </div>
+                                @error('tempatLahir')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                                @error('tglLahir')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="mb-3">
-        <label for="fotoIjazah" class="form-label">Scan Ijazah</label>
-        <input type="file" class="form-control @error('fotoIjazah')
-        is-invalid
-    @enderror" id="fotoIjazah" name="fotoIjazah" placeholder="foto Ijazah">
-    </div>
+                    <hr class="my-4">
+                    <h6 class="heading-small text-muted mb-4">Informasi Alamat</h6>
 
-    <div class="mb-3">
-        <label for="ipk" class="form-label">IPK</label>
-        <input type="text" class="form-control @error('ipk')
-        is-invalid
-    @enderror" id="ipk" name="ipk" placeholder="Contoh : 3.8">
-    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="provinsi">Provinsi</label>
+                                <select class="form-select" id="provinsi" name="provinsi">
+                                    <option selected>--Pilih Provinsi--</option>
+                                    @foreach ($provinces as $provinsi )
+                                    <option value="{{$provinsi->id}}">{{$provinsi->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="kabupaten">Kabupaten</label>
+                                <select class="form-select" id="kabupaten" name="kabupaten"></select>
+                            </div>
+                        </div>
+                    </div>
 
-    <div class="mb-3">
-        <label for="thnLulus" class="form-label">Tempat, Tanggal Lahir</label>
-        <div class="input-group">
-            <input type="text" aria-label="First name" class="form-control @error('tempatLahir')
-            is-invalid
-        @enderror" name="tempatLahir" placeholder="Tempat Lahir">
-            <input type="date" aria-label="Last name" class="form-control @error('tglLahir')
-            is-invalid
-        @enderror" name="tglLahir">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="kecamatan">Kecamatan</label>
+                                <select class="form-select" id="kecamatan" name="kecamatan"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="kelurahan">Kelurahan</label>
+                                <select class="form-select" id="kelurahan" name="kelurahan"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="koordinat">Koordinat Tempat Tinggal</label>
+                        <input type="text" id="koordinat" class="form-control @error('koordinat') is-invalid @enderror" name="koordinat" placeholder="latitude, longitude" value="-3.298618801108944, 114.58542404981114">
+                        @error('koordinat')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div id="map2" class="mb-3 rounded border"></div>
+
+                    <hr class="my-4">
+                    <h6 class="heading-small text-muted mb-4">Informasi Lainnya</h6>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="jk" class="form-label">Jenis Kelamin</label>
+                                <select id="jk" class="form-select" name="jk">
+                                    <option selected>--Pilih Jenis Kelamin--</option>
+                                    <option value="laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="agama" class="form-label">Agama</label>
+                                <select class="form-select" name="agama">
+                                    <option selected>--Pilih Agama--</option>
+                                    <option value="islam">Islam</option>
+                                    <option value="kristen">Kristen</option>
+                                    <option value="hindu">Hindu</option>
+                                    <option value="buddha">Buddha</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="kawin" class="form-label">Status Perkawinan</label>
+                                <select id="kawin" class="form-select" name="kawin">
+                                    <option selected>--Pilih Status Perkawinan--</option>
+                                    <option value="belum">Belum Menikah</option>
+                                    <option value="sudah">Sudah Menikah</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="pekerjaan" class="form-label">Status Pekerjaan</label>
+                                <select class="form-select" name="pekerjaan">
+                                    <option selected>--Status Pekerjaan--</option>
+                                    <option value="belum">Belum Bekerja</option>
+                                    <option value="sudah">Sudah Bekerja</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary px-4">Selesai</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-
-    <label class="form-label" >Alamat</label>
-    <div class="input-group mb-3">
-        <label class="input-group-text " for="provinsi">Provinsi</label>
-        <select class="form-select" id="provinsi" name="provinsi">
-          <option selected>--Pilih Provinsi--</option>
-          @foreach ($provinces as $provinsi )  
-          <option value="{{$provinsi->id}}">{{$provinsi->name}}</option>
-          @endforeach
-        </select>
-      </div>
-
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="kabupaten">Kabupaten</label>
-        <select class="form-select" id="kabupaten" name="kabupaten">
-
-        </select>
-      </div>
-
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="kecamatan">Kecamatan</label>
-        <select class="form-select" id="kecamatan" name="kecamatan">
-
-        </select>
-      </div>
-
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="kelurahan">Kelurahan</label>
-        <select class="form-select" id="kelurahan" name="kelurahan">
-
-        </select>
-      </div>
-
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="koordinat">Koordinat Tempat Tinggal</label>
-        <input type="text" aria-label="Last name" id="koordinat" class="form-control @error('koordinat')
-        is-invalid
-    @enderror"  name="koordinat" placeholder="latitude, longitude" value="-3.298618801108944, 114.58542404981114"><br>
-    </div>
-    <div id="map2"></div>
-      
-
-    <div class="mb-3">
-        <label for="jk" class="form-label">Jenis Kelamin</label>
-        <select id="jk" class="form-select" aria-label="Default select example" name="jk">
-            <option selected>--Pilih Jenis Kelamin--</option>
-            <option value="laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-          </select>
-    </div>
-
-    <div class="mb-3">
-        <label for="agama" class="form-label">Agama</label>
-        <select class="form-select" aria-label="Default select example" name="agama">
-            <option selected>--Pilih Agama--</option>
-            <option value="islam">Islam</option>
-            <option value="kristen">Kristen</option>
-            <option value="hindu">Hindu</option>
-            <option value="buddha">Buddha</option>
-          </select>
-    </div>
-
-    <div class="mb-3">
-        <label for="kawin" class="form-label">Status Perkawinan</label>
-        <select id="kawin" class="form-select" aria-label="Default select example" name="kawin">
-            <option selected>--Pilih Status Perkawinan--</option>
-            <option value="belum">Belum Menikah</option>
-            <option value="sudah">Sudah Menikah</option>
-          </select>
-    </div>
-
-    <div class="mb-3">
-        <label for="pekerjaan" class="form-label">Status Pekerjaan</label>
-        <select class="form-select" aria-label="Default select example" name="pekerjaan">
-            <option selected>--Status Pekerjaan--</option>
-            <option value="belum">Belum Bekerja</option>
-            <option value="sudah">Sudah Bekerja</option>
-          </select>
-    </div>
-    
-
-
-    <button type="submit" class="btn btn-primary">Selesai</button>
-</form>
 </div>
 
 

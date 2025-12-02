@@ -1,152 +1,77 @@
 @extends("layouts.main")
 @section("container")
 
-<style>
-    .container-login {
-        background-image: url('/img/SAM_2141.JPG');
-        background-attachment: fixed;
-        background-size: cover;
-    }
+<div class="container">
 
-    .form-login {
-        background-color: #000000ad;
-    }
-</style>
+    <!-- Outer Row -->
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
 
-<div class=" d-flex justify-content-start align-items-center" style="height: 100vh">
-    <div id="particles- js"></div>
-    <div class="container">
+        <div class="col-xl-10 col-lg-12 col-md-9">
 
-        <div style="position: relative;" class="row justify-content-start align-items-center">
-            <div class="col-sm-6 p-5">
-                @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <script>
-                        Swal.fire({
-                            title: 'Login Berhasil',
-                            icon: 'success',
-                        })
-                    </script>
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background: url('/img/alumni.png'); background-position: center; background-size: contain; background-repeat: no-repeat; min-height: 400px;"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Selamat Datang Kembali!</h1>
+                                </div>
+
+                                @if (session()->has('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                @endif
+
+                                @if (session()->has('loginError'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Login Gagal! Email atau Password salah.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                @endif
+
+                                <form class="user" action="/login" method="post">
+                                    @csrf
+                                    <div class="form-group mb-3">
+                                        <input type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror"
+                                            id="exampleInputEmail" aria-describedby="emailHelp"
+                                            placeholder="Masukkan Alamat Email..." value="{{old('email')}}" required>
+                                        @error('email')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror"
+                                            id="exampleInputPassword" placeholder="Password" required>
+                                        @error('password')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary btn-user btn-block w-100">
+                                        Login
+                                    </button>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    <a class="small" href="/register">Belum punya akun? Daftar disini!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                @endif
-                @if (session()->has('loginError'))
-                <script>
-                    Swal.fire({
-                        title: 'Login Gagal',
-                        text: 'Email / Password yang anda masukkan salah.',
-                        icon: 'error',
-                    })
-                </script>
-                {{-- <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{session('loginError')}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div> --}}
-            @endif
-
-
-            <h1 class="text-center" style="color: #222e64; line-height: 45px; margin-bottom:50px">Silahkan Login</h1>
-            <form id="formLogin" action="/login" method="post" class="">
-                @csrf
-
-                <div class="mb-3">
-                    <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Email" value="{{old('email')}}" required>
-                </div>
-
-                <div class="mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Masukkan Password" value="{{old('password')}}" required>
-                </div>
-
-                <div class="mb-3  d-flex flex-column justify-content-center">
-                    <button id="btnLogin" type="submit" style="background-color: #222e64; color: #ffffff;" class="btn btn-sm text-center">Login</button>
-                </div>
-            </form>
+            </div>
 
         </div>
-        <div class="col-sm-6">
-            <img style="height: 45vh;" src="img/alumni.png" alt="">
-        </div>
+
     </div>
+
 </div>
-</div>
-
-<script>
-    document.getElementById("formLogin").onsubmit = () => {
-        loader.style.display = "flex";
-    }
-</script>
-<script>
-    $(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    });
-
-    $(function() {
-        $('#provinsi').on('change', () => {
-            let id_provinsi = $('#provinsi').val();
-
-            $.ajax({
-                type: "POST",
-                url: "{{route('getKabupaten')}}",
-                data: {
-                    id_provinsi: id_provinsi
-                },
-                cache: false,
-
-                success: function(msg) {
-                    $('#kabupaten').html(msg);
-                    $('#kecamatan').html('');
-                    $('#kelurahan').html('');
-                },
-                error: (data) => {
-                    console.log('error', data)
-                }
-            })
-        })
-
-        $('#kabupaten').on('change', () => {
-            let id_kabupaten = $('#kabupaten').val();
-
-            $.ajax({
-                type: "POST",
-                url: "{{route('getKecamatan')}}",
-                data: {
-                    id_kabupaten: id_kabupaten
-                },
-                cache: false,
-
-                success: function(msg) {
-                    $('#kecamatan').html(msg);
-                    $('#kelurahan').html('');
-                },
-                error: (data) => {
-                    console.log('error', data)
-                }
-            })
-        })
-
-        $('#kecamatan').on('change', () => {
-            let id_kecamatan = $('#kecamatan').val();
-
-            $.ajax({
-                type: "POST",
-                url: "{{route('getKelurahan')}}",
-                data: {
-                    id_kecamatan: id_kecamatan
-                },
-                cache: false,
-
-                success: function(msg) {
-                    $('#kelurahan').html(msg);
-                },
-                error: (data) => {
-                    console.log('error', data)
-                }
-            })
-        })
-    })
-</script>
-
 @endsection

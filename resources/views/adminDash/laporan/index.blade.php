@@ -1,12 +1,7 @@
 @extends("adminDash.layouts.main")
 
 @section("container")
-<style>
-    .container.mx-4.my-4{
-        background-color: #ffffff;
-    }
 
-</style>
 <h1 class="h2 text-primary text-center mt-2">Rekap Tracer Study</h1>
  
 @if (count($biodatas) > 0 && count($pekerjaans) > 0)
@@ -14,77 +9,113 @@
             
 <div class="row px-2">
 
-<div class="col-sm-4 my-5">      
-  <h3 class="text-center">Data Kelulusan </h3>     
+<div class="col-sm-4 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">Data Kelulusan </h3>     
     <div>
       <canvas id="chartKelulusan"></canvas>
     </div>
-    <p class="text-secondary text-center">Total Alumni Mahasiswa Pendidikan Komputer : {{count($biodatas)}} </p>
+    <p class="text-secondary text-center mt-2">Total Alumni Mahasiswa Pendidikan Komputer : {{count($biodatas)}} </p>
+    </div>
+  </div>
 </div>
 
-<div class="col-sm-4 my-5">      
-  <h3 class="text-center">Data Kelulusan Per Angkatan</h3>     
+<div class="col-sm-4 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">Data Kelulusan Per Angkatan</h3>     
     <div>
       <canvas id="chartKelulusanAngkatan"></canvas>
     </div>
-    <p class="text-secondary text-center">Total Alumni Mahasiswa Pendidikan Komputer : {{count($biodatas)}} </p>
+    <p class="text-secondary text-center mt-2">Total Alumni Mahasiswa Pendidikan Komputer : {{count($biodatas)}} </p>
+    </div>
+  </div>
 </div>
 
-<div class="col-sm-4 my-5">      
-  <h3 class="text-center">Lama masa study</h3>     
+<div class="col-sm-4 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">Lama masa study</h3>     
     <div>
       <canvas id="chartLamaKuliah"></canvas>
     </div>
-    <p class="text-secondary text-center">Rata rata lama masa study {{$datas['rata2_kuliah']}} Tahun</p>
+    <p class="text-secondary text-center mt-2">Rata rata lama masa study {{$datas['rata2_kuliah']}} Tahun</p>
+    </div>
+  </div>
 </div>
 
-<div class="col-sm-4 my-5">      
-  <h3 class="text-center">IPK Alumni </h3>     
+<div class="col-sm-4 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">IPK Alumni </h3>     
     <div>
       <canvas id="chartIPK"></canvas>
     </div>
-    <p class="text-secondary text-center">Rata rata IPK alumni : {{$datas['avgIPK']}} </p>
+    <p class="text-secondary text-center mt-2">Rata rata IPK alumni : {{$datas['avgIPK']}} </p>
+    </div>
+  </div>
 </div>
 
-<div class="col-sm-4 my-5">      
-  <h3 class="text-center">Status Pekerjaan</h3>     
+<div class="col-sm-4 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">Status Pekerjaan</h3>     
     <div>
       <canvas id="chartBekerja"></canvas>
     </div>
-    <p class="text-secondary text-center">Jumlah Alumni yang sudah bekerja {{ count($datas["sudahBekerja"]) }}, yang belum bekerja {{count($datas['belumBekerja'])}} </p>
+    <p class="text-secondary text-center mt-2">Jumlah Alumni yang sudah bekerja {{ count($datas["sudahBekerja"]) }}, yang belum bekerja {{count($datas['belumBekerja'])}} </p>
+    </div>
+  </div>
 </div>
 
-<div class="col-sm-4 my-5">      
-  <h3 class="text-center">Relevansi Pekerjaan</h3>     
+<div class="col-sm-4 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">Relevansi Pekerjaan</h3>     
     <div>
       <canvas id="chartRelevansi"></canvas>
     </div>
-    <p class="text-secondary text-center"> {{($datas['pRelevan'][0])}} relevansi tinggi, {{ ($datas['pRelevan'][1]) }} relevansi sedang dan {{($datas['pRelevan'][2])}} relevansi rendah</p>
+    <p class="text-secondary text-center mt-2"> {{($datas['pRelevan'][0])}} relevansi tinggi, {{ ($datas['pRelevan'][1]) }} relevansi sedang dan {{($datas['pRelevan'][2])}} relevansi rendah</p>
+    </div>
+  </div>
 </div>
 
 
 
-<div class="col-sm-4 my-5">      
-  <h3 class="text-center">Gaji Alumni</h3>     
+<div class="col-sm-4 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">Gaji Alumni</h3>     
   <div>
     <canvas id="chartGaji"></canvas>
   </div>
-  <p class="text-secondary text-center">Rata-rata Gaji Alumni : Rp. {{number_format($datas['avgGaji'],2,",",".")}} </p>
+  <p class="text-secondary text-center mt-2">Rata-rata Gaji Alumni : Rp. {{number_format($datas['avgGaji'],2,",",".")}} </p>
+    </div>
+  </div>
 </div>
 
-<div class="col-sm-4 my-5">      
-  <h3 class="text-center">Rentang Waktu Mendapatkan Pekerjaan</h3>     
+<div class="col-sm-4 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">Rentang Waktu Mendapatkan Pekerjaan</h3>     
   <div>
     <canvas id="chartRKerja"></canvas>
   </div>
-  <p class="text-secondary text-center">Rata-rata Rentang Alumni Mendapatkan Pekerjaan : {{number_format($datas['avgRKerja'],2)}} Tahun</p>
+  <p class="text-secondary text-center mt-2">Rata-rata Rentang Alumni Mendapatkan Pekerjaan : {{number_format($datas['avgRKerja'],2)}} Tahun</p>
+    </div>
+  </div>
 </div>
-<div class="col-sm-12 my-5">      
-  <h3 class="text-center">Kategori Pekerjaan</h3>     
+<div class="col-sm-12 my-5">
+  <div class="card shadow h-100">
+    <div class="card-body">
+      <h3 class="text-center h5">Kategori Pekerjaan</h3>     
     <div>
       <canvas id="chartKategori2"></canvas>
     </div>
-    <p class="text-secondary text-center">Jumlah Alumni yang sudah bekerja : {{count($datas['sudahBekerja'])}} </p>
+    <p class="text-secondary text-center mt-2">Jumlah Alumni yang sudah bekerja : {{count($datas['sudahBekerja'])}} </p>
+    </div>
+  </div>
 </div>
 
 
