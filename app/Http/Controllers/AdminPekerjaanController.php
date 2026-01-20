@@ -17,7 +17,7 @@ class AdminPekerjaanController extends Controller
      */
     public function index()
     {
-        $data['pekerjaans'] = Pekerjaan::all();
+        $data['pekerjaans'] = Pekerjaan::all()->load('biodata');
 
         return view("adminDash.pekerjaan.index", $data);
     }

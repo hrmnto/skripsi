@@ -43,6 +43,10 @@ class LaporanControllerPDF extends Controller
 
 
             foreach ($this->biodatas as $biodata) {
+                if (!$biodata->tglMasuk || !$biodata->tglLulus) {
+                    continue;
+                }
+
                 $tgl1 = new DateTime($biodata->tglMasuk);
                 $tgl2 = new DateTime($biodata->tglLulus);
                 $jarak = $tgl2->diff($tgl1);
@@ -142,16 +146,20 @@ class LaporanControllerPDF extends Controller
                     }
 
 
-                    if ($pekerjaans[$i]->kategori_pekerjaan1 == 1) {
+                    if ($pekerjaans[$i]->kategori_pekerjaan1 == 1 && $pekerjaans[$i]->biodata) {
                         $kategoriPekerjaan1[] = $pekerjaans[$i]->biodata->nim;
                     }
-                    if ($pekerjaans[$i]->kategori_pekerjaan2 == 1) {
+                    if ($pekerjaans[$i]->kategori_pekerjaan2 == 1 && $pekerjaans[$i]->biodata) {
                         $kategoriPekerjaan2[] = $pekerjaans[$i]->biodata->nim;
                     }
-                    if ($pekerjaans[$i]->kategori_pekerjaan3 == 1) {
+                    if ($pekerjaans[$i]->kategori_pekerjaan3 == 1 && $pekerjaans[$i]->biodata) {
                         $kategoriPekerjaan3[] = $pekerjaans[$i]->biodata->nim;
                     }
 
+
+                    if (!$pekerjaans[$i]->biodata || !$pekerjaans[$i]->biodata->tglLulus) {
+                        continue;
+                    }
 
                     $tglKerja1 = new DateTime($pekerjaans[$i]->biodata->tglLulus);
                     $tglKerja2 = new DateTime($pekerjaans[$i]->tanggal_pekerjaan);
